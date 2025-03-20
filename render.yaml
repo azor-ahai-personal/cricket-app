@@ -1,19 +1,18 @@
 services:
   - type: web
     name: cricket-app
-    env: ruby
+    runtime: ruby
+    plan: free
     buildCommand: |
-      bundle install &&
-      cd frontend &&
-      npm install &&
-      npm run build &&
-      cd .. &&
+      bundle install
+      cd frontend && npm install && npm run build && cd ..
       cp -a frontend/build/. public/
-    startCommand: bundle exec rails s
+    startCommand: "bundle exec rails s"
     envVars:
       - key: RAILS_MASTER_KEY
         sync: false
       - key: MONGODB_URI
         sync: false
       - key: RAILS_ENV
-        value: production 
+        value: production
+    autoDeploy: true 
