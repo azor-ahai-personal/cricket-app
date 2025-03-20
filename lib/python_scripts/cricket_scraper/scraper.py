@@ -147,15 +147,34 @@ class CricketScraper:
         else:
             print("No MVP data found!")
 
-    def scrape_squad(self):
+    def scrape_squad(self, team_code):
         """
-        Scrapes squad data for CSK team
+        Scrapes squad data for any IPL team
+        Args:
+            team_code (str): Team code (e.g., 'CSK', 'MI', etc.)
         Returns:
             pandas.DataFrame: DataFrame containing squad data
         """
+        # Team URLs mapping
+        team_urls = {
+            'CSK': 'https://www.espncricinfo.com/series/ipl-2025-1449924/chennai-super-kings-squad-1458628/series-squads',
+            'MI': 'https://www.espncricinfo.com/series/ipl-2025-1449924/mumbai-indians-squad-1458620/series-squads',
+            'RCB': 'https://www.espncricinfo.com/series/ipl-2025-1449924/royal-challengers-bengaluru-squad-1458630/series-squads',
+            'KKR': 'https://www.espncricinfo.com/series/ipl-2025-1449924/kolkata-knight-riders-squad-1458633/series-squads',
+            'RR': 'https://www.espncricinfo.com/series/ipl-2025-1449924/rajasthan-royals-squad-1458634/series-squads',
+            'PBKS': 'https://www.espncricinfo.com/series/ipl-2025-1449924/punjab-kings-squad-1458637/series-squads',
+            'DC': 'https://www.espncricinfo.com/series/ipl-2025-1449924/delhi-capitals-squad-1458631/series-squads',
+            'SRH': 'https://www.espncricinfo.com/series/ipl-2025-1449924/sunrisers-hyderabad-squad-1458622/series-squads',
+            'GT': 'https://www.espncricinfo.com/series/ipl-2025-1449924/gujarat-titans-squad-1458635/series-squads',
+            'LSG': 'https://www.espncricinfo.com/series/ipl-2025-1449924/lucknow-super-giants-squad-1458636/series-squads'
+        }
+
+        if team_code not in team_urls:
+            print(f"Invalid team code: {team_code}")
+            return None
+
         try:
-            squad_url = "https://www.espncricinfo.com/series/ipl-2025-1449924/chennai-super-kings-squad-1458628/series-squads"
-            self.url = squad_url
+            self.url = team_urls[team_code]
             response = requests.get(self.url, headers=self.headers)
             response.raise_for_status()
             
@@ -192,7 +211,7 @@ class CricketScraper:
 
                     players_data.append({
                         'Name': name,
-                        'Team': 'CSK',
+                        'Team': team_code,
                         'Role': role,
                         'Indian': is_indian
                     })
@@ -203,7 +222,7 @@ class CricketScraper:
                     continue
 
             if not players_data:
-                print("No squad data was found!")
+                print(f"No squad data was found for {team_code}!")
                 return pd.DataFrame(columns=['Name', 'Team', 'Role', 'Indian'])
 
             df = pd.DataFrame(players_data)
@@ -212,19 +231,19 @@ class CricketScraper:
             data_dir = Path('data')
             data_dir.mkdir(exist_ok=True)
             
-            # Save to CSV
-            output_file = data_dir / 'csk_squad_2024.csv'
+            # Save to CSV with team-specific filename
+            output_file = data_dir / f'{team_code.lower()}_squad_2025.csv'
             df.to_csv(output_file, index=False)
-            print(f"\nSaved squad data to {output_file}")
+            print(f"\nSaved {team_code} squad data to {output_file}")
             
             # Print summary
-            print("\nPlayers by role:")
+            print(f"\n{team_code} Players by role:")
             print(df.groupby('Role').size())
-            print("\nIndian vs Overseas players:")
+            print(f"\n{team_code} Indian vs Overseas players:")
             print(df.groupby('Indian').size())
             
             return df
 
         except Exception as e:
-            print(f"An error occurred: {str(e)}")
+            print(f"An error occurred for {team_code}: {str(e)}")
             return pd.DataFrame(columns=['Name', 'Team', 'Role', 'Indian']) 
