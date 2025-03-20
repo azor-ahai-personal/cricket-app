@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
+from pathlib import Path
 
 class CricketScraper:
     def __init__(self, url):
@@ -144,4 +145,86 @@ class CricketScraper:
             df.to_csv(output_path, index=False)
             print(f"Data saved to {output_path}")
         else:
-            print("No MVP data found!") 
+            print("No MVP data found!")
+
+    def scrape_squad(self):
+        """
+        Scrapes squad data for CSK team
+        Returns:
+            pandas.DataFrame: DataFrame containing squad data
+        """
+        try:
+            squad_url = "https://www.espncricinfo.com/series/ipl-2025-1449924/chennai-super-kings-squad-1458628/series-squads"
+            self.url = squad_url
+            response = requests.get(self.url, headers=self.headers)
+            response.raise_for_status()
+            
+            soup = BeautifulSoup(response.text, 'html.parser')
+            players_data = []
+            
+            # Find all player cards
+            player_cards = soup.find_all('div', class_='ds-relative ds-flex ds-flex-row ds-space-x-4 ds-p-3')
+            
+            for card in player_cards:
+                try:
+                    # Get player name
+                    name_elem = card.find('a', class_='ds-inline-flex ds-items-start ds-leading-none')
+                    if not name_elem:
+                        continue
+                    name = name_elem.text.strip()
+
+                    # Get role from the specific element
+                    role_elem = card.find('p', class_='ds-text-tight-s ds-font-regular ds-mb-2 ds-mt-1')
+                    role_text = role_elem.text.strip() if role_elem else ""
+                    
+                    # Determine role based on text
+                    if "allrounder" in role_text.lower():
+                        role = "allrounder"
+                    elif "bowler" in role_text.lower():
+                        role = "bowler"
+                    elif "batter" in role_text.lower():
+                        role = "batter"
+                    else:
+                        role = "Unknown"
+
+                    # Check for airplane icon (foreign player)
+                    is_indian = not bool(card.find('i', class_='icon-airplanemode_active-filled'))
+
+                    players_data.append({
+                        'Name': name,
+                        'Team': 'CSK',
+                        'Role': role,
+                        'Indian': is_indian
+                    })
+                    print(f"Processed: {name} - {role} - {'Indian' if is_indian else 'Overseas'}")
+
+                except Exception as e:
+                    print(f"Error processing a player card: {str(e)}")
+                    continue
+
+            if not players_data:
+                print("No squad data was found!")
+                return pd.DataFrame(columns=['Name', 'Team', 'Role', 'Indian'])
+
+            df = pd.DataFrame(players_data)
+            
+            # Create data directory if it doesn't exist
+            data_dir = Path('data')
+            data_dir.mkdir(exist_ok=True)
+            
+            # Save to CSV
+            output_file = data_dir / 'csk_squad_2024.csv'
+            df.to_csv(output_file, index=False)
+            print(f"\nSaved squad data to {output_file}")
+            
+            # Print summary
+            print("\nPlayers by role:")
+            print(df.groupby('Role').size())
+            print("\nIndian vs Overseas players:")
+            print(df.groupby('Indian').size())
+            
+            return df
+
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            return pd.DataFrame(columns=['Name', 'Team', 'Role', 'Indian']) 
