@@ -1,15 +1,21 @@
 from scraper import CricketScraper
 
 def main():
-    # Use a recent IPL match scorecard URL
-    scorecard_url = "https://www.espncricinfo.com/series/indian-premier-league-2023-1345038/gujarat-titans-vs-chennai-super-kings-final-1370353/full-scorecard"
+    # Use the Impact Player URL instead of scorecard
+    impact_url = "https://www.espncricinfo.com/series/indian-premier-league-2023-1345038/gujarat-titans-vs-chennai-super-kings-final-1370353/match-impact-player"
+    
     try:
-        scraper = CricketScraper(scorecard_url)
-        batting_data = scraper.scrape_batting_scorecard()
-        scraper.save_to_csv(batting_data)
-        print("\nScraped Data:")
-        print(batting_data)
+        print("Starting MVP stats scraper...")
+        scraper = CricketScraper(impact_url)
+        mvp_data = scraper.scrape_mvp_data()
         
+        if not mvp_data.empty:
+            scraper.save_to_csv(mvp_data, 'mvp_stats.csv')
+            print("\nMVP Statistics:")
+            print(mvp_data)
+        else:
+            print("No MVP data was found!")
+            
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
