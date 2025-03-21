@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,7 +19,8 @@ const Login = () => {
         password,
       });
       
-      localStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      login(token);
       navigate('/home'); // Redirect to home page after successful login
       
     } catch (err) {

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import apiService from '../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Signup.css';
+
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +11,7 @@ const Signup = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  const { login } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -24,8 +26,9 @@ const Signup = () => {
         password,
         password_confirmation: passwordConfirmation
       });
-      
-      localStorage.setItem('token', response.token);
+
+      const token = response.data.token;
+      login(token);
       navigate('/home');
     } catch (err) {
       console.error('Signup error:', err.response || err); // Debug log

@@ -3,7 +3,9 @@ class User
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
 
-  belongs_to :team
+  has_many :fantasy_teams, class_name: 'FantasyTeam'
+  has_and_belongs_to_many :contests, class_name: 'Contest'
+  has_many :participations, class_name: 'Participation'
 
   field :email, type: String
   field :password_digest, type: String

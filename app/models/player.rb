@@ -3,6 +3,8 @@ class Player
     include Mongoid::Timestamps
 
     belongs_to :team, class_name: 'IplTeam'
+    has_and_belongs_to_many :fantasy_teams
+
 
     field :name, type: String
     field :role, type: String
