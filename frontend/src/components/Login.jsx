@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/v1/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/login`, {
         email,
         password,
       });
@@ -49,6 +49,12 @@ const Login = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <p>
+          Don't have an account?{' '}
+          <span className="link" onClick={() => navigate('/signup')}>
+            Sign Up
+          </span>
+        </p>
       </form>
     </div>
   );

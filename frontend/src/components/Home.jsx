@@ -13,14 +13,21 @@ const Home = () => {
     navigate('/view-team');
   };
 
+  const handleViewPlayers = () => {
+    navigate('/players');
+  };
+
   return (
     <div className="home-container">
       <div className="buttons-container">
-        <button className="home-button" onClick={handleCreateTeam}>
+        <button className="action-button" onClick={handleCreateTeam}>
           Create Team
         </button>
-        <button className="home-button" onClick={handleViewTeam}>
+        <button className="action-button" onClick={handleViewTeam}>
           View Team
+        </button>
+        <button className="action-button" onClick={handleViewPlayers}>
+          View Players
         </button>
       </div>
     </div>

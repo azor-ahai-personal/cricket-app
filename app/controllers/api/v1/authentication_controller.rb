@@ -3,6 +3,18 @@ module Api
     class AuthenticationController < ApplicationController
       skip_before_action :verify_authenticity_token
 
+      def signup
+        @user = User.new(user_params)
+        
+        if @user.save
+          token = jwt_encode(user_id: @user.id)
+          render json: { token: token, email: @user.email }, status: :created
+        else
+          render json: { errors: @user.errors.full_messages }, 
+                 status: :unprocessable_entity
+        end
+      end
+
       def login
         @user = User.find_by(email: params[:email])
         
@@ -17,6 +29,10 @@ module Api
       end
 
       private
+
+      def user_params
+        params.permit(:email, :password)
+      end
 
       def jwt_encode(payload, exp = 24.hours.from_now)
         payload[:exp] = exp.to_i

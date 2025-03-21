@@ -1,45 +1,38 @@
+/* Make sure the container fills the entire viewport */
 .home-container {
+  width: 100%;
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: #1a1a1a; /* Dark background */
-  position: relative;
+  align-items: center;
+  background-color: #f4f4f4;
 }
 
-/* Add an overlay with team logos */
-.home-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  z-index: 1;
-}
-
+/* Ensure buttons are aligned in a row */
 .buttons-container {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  gap: 20px;
+  display: flex; 
+  gap: 20px; 
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
 }
 
-.home-button {
-  padding: 15px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* Style buttons */
+.action-button {
+  width: 150px; /* Fixed width for each button */
+  height: 50px; /* Fixed height for each button */
+  padding: 0 20px;
   background-color: #007bff;
   color: white;
-  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  z-index: 2;
 }
 
 .home-button:hover {
   background-color: #0056b3;
-} 
+}

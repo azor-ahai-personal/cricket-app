@@ -13,7 +13,6 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "rails/test_unit/railtie"
-require "mongoid"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -36,8 +35,5 @@ module CricketApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # Configure Mongoid
-    Mongoid.load!(Rails.root.join("config/mongoid.yml"))
   end
 end

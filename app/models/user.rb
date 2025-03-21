@@ -3,6 +3,8 @@ class User
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
 
+  belongs_to :team
+
   field :email, type: String
   field :password_digest, type: String
 
