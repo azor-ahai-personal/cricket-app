@@ -33,7 +33,7 @@ module Api
       private
 
       def user_params
-        params.permit(:email, :password)
+        params.permit(:name,:email, :password)
       end
 
       def jwt_encode(payload, exp = 24.hours.from_now)

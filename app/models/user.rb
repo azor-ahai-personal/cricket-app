@@ -6,8 +6,10 @@ class User
   has_many :fantasy_teams, class_name: 'FantasyTeam'
   has_and_belongs_to_many :contests, class_name: 'Contest'
   has_many :participations, class_name: 'Participation'
+  has_many :owned_contests, class_name: 'Contest', inverse_of: :owner
 
   field :email, type: String
+  field :name, type: String
   field :password_digest, type: String
 
   has_secure_password

@@ -35,10 +35,9 @@ const ContestDetails = () => {
     <div className="contest-details">
       <h2>{contest.name}</h2>
       <p><strong>Passkey:</strong> {contest.passkey}</p>
-      <p><strong>Status:</strong> {contest.status}</p>
       <p><strong>Total Teams:</strong> {contest.total_teams}</p>
-      <p><strong>Start Time:</strong> {new Date(contest.start_time).toLocaleString()}</p>
-      <p><strong>End Time:</strong> {new Date(contest.end_time).toLocaleString()}</p>
+      <p><strong>Owner:</strong> {contest.owner?.name}</p>
+      <p><strong>Status:</strong> {contest.active ? 'Active' : 'Inactive'}</p>
     </div>
   );
 };

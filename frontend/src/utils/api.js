@@ -24,11 +24,14 @@ export const apiService = {
   getContests: (data) => api.get('/contests', data),
   getContest: (id) => api.get(`/contests/${id}`),
   createContest: (data) => api.post('/contests', data),
+  updateContest: (id, data) => api.put(`/contests/${id}`, data),
+  joinContest: (data) => api.put('/contests/join', data),
 
   // Teams endpoints
   createTeam: (data) => api.post('/teams', data),
-  getTeams: () => api.get('/teams'),
-  getTeam: (id) => api.get(`/teams/${id}`),
+  getTeams: () => api.get('/ipl_teams'),
+
+  getBootstrapData: (data) => api.get('/bootstraps/additional_bootstrapped', data),
 };
 
 // Error handler

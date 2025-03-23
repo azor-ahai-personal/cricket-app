@@ -17,7 +17,12 @@ Rails.application.routes.draw do
       post '/signup', to: 'authentication#signup'
       post '/login', to: 'authentication#login'
       resources :players, only: [:index]
-      resources :contests, only: [:index, :create, :update, :destroy, :show]
+      resources :contests, only: [:index, :create, :update, :destroy, :show] do
+        put 'join', on: :collection
+      end
+      resource :bootstraps, only: [:show] do
+        get 'additional_bootstrapped', on: :collection
+      end
     end
   end
 

@@ -2,7 +2,7 @@ module Api
     module V1
         class ContestsController < ApplicationController
 
-            # before_action :require_login, only: [:index, :create, :show]
+            before_action :require_login, only: [:index, :create, :show, :join]
 
             def index
                 @contests = Contest.where(:user_ids.in => [@current_user.id])
@@ -19,7 +19,8 @@ module Api
                 @contest = Contest.new(contest_params.merge(
                     passkey: passkey, 
                     active: false,
-                    user_ids: [@current_user.id]
+                    user_ids: [@current_user.id],
+                    owner: @current_user
                 ))
                 puts "contest_params: #{contest_params}"
                 if @contest.save
@@ -27,6 +28,33 @@ module Api
                 else
                     render json: { errors: @contest.errors.full_messages }, status: :unprocessable_entity
                 end
+            end
+
+            def update
+                @contest = Contest.find(params[:id])
+                if @contest.nil?
+                    render json: { error: "Contest not found" }, status: :not_found
+                    return
+                end 
+                if @contest.update(update_params)
+                    render 'api/v1/contests/show', formats: [:json]
+                else
+                    render json: { errors: @contest.errors.full_messages }, status: :unprocessable_entity
+                end
+            end
+            def join
+                contest = Contest.find_by(passkey: params[:passkey])
+                if contest.nil?
+                    render json: { error: "Contest not found" }, status: :not_found
+                    return
+                end
+                if contest.user_ids.include?(@current_user.id)
+                    render json: { error: "You are already in this contest" }, status: :unprocessable_entity
+                    return
+                end
+                contest.user_ids << @current_user.id
+                contest.save!
+                render json: { message: "Joined contest successfully" }, status: :ok
             end
 
             private
@@ -49,6 +77,10 @@ module Api
 
             def contest_params
                 params.require(:contest).permit(:name, :entry_fee)
+            end
+
+            def update_params
+                params.require(:contest).permit(:active)
             end
         end
     end

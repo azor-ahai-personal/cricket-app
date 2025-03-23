@@ -6,13 +6,9 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleCreateTeam = () => {
-    navigate('/create-team');
+    navigate('/teams');
   };
-
-  const handleViewTeam = () => {
-    navigate('/view-team');
-  };
-
+  
   const handleViewPlayers = () => {
     navigate('/players');
   };
@@ -25,10 +21,7 @@ const Home = () => {
     <div className="home-container">
       <div className="buttons-container">
         <button className="action-button" onClick={handleCreateTeam}>
-          Create Team
-        </button>
-        <button className="action-button" onClick={handleViewTeam}>
-          View Team
+          Your Teams
         </button>
         <button className="action-button" onClick={handleViewPlayers}>
           View Players

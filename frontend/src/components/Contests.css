@@ -85,24 +85,62 @@
 /* Header and Button */
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Vertically center all items */
+  gap: 20px; /* Add spacing between items */
   margin-bottom: 20px;
 }
 
-.create-contest-button {
+.home-button2 {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 6px 12px; /* Reduced padding to make the button smaller */
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 14px; /* Reduced font size */
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  margin-right: 0; /* Remove margin-right */
 }
 
-.create-contest-button:hover {
+.home-button2:hover {
   background-color: #0056b3;
+}
+
+.contests-heading {
+  margin: 0; /* Remove default margin */
+  flex-grow: 1; /* Allow the heading to take up remaining space */
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px; /* Add spacing between buttons */
+}
+
+.action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
+}
+
+.join-contest-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.join-contest-button:hover {
+  background-color: #218838;
 }
 
 /* Dialog Box */
@@ -211,7 +249,8 @@
 }
 
 .dropdown-content button {
-  display: inline-block; /* Display button inline */
+  display: block;
+  width: 100%;
   padding: 8px 16px;
   text-align: left;
   border: none;

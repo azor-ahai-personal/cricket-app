@@ -7,6 +7,7 @@ import './Signup.css';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState('');
@@ -22,6 +23,7 @@ const Signup = () => {
 
     try {
       const response = await apiService.signup({
+        name,
         email,
         password,
         password_confirmation: passwordConfirmation
@@ -41,6 +43,15 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         {error && <div className="error">{error}</div>}
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
         <div>
           <label>Email:</label>
           <input
