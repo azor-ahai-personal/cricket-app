@@ -10,6 +10,8 @@ class Contest
     field :passkey, type: String
     field :start_time, type: DateTime
     field :end_time, type: DateTime
-    field :status, type: String
+    field :active, type: Boolean, default: false
     field :total_teams, type: Integer
+
+    validates :passkey, presence: true, uniqueness: true
 end

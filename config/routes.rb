@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post '/signup', to: 'authentication#signup'
       post '/login', to: 'authentication#login'
       resources :players, only: [:index]
+      resources :contests, only: [:index, :create, :update, :destroy, :show]
     end
   end
 

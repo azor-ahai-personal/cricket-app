@@ -1,7 +1,9 @@
 module Api
   module V1
     class AuthenticationController < ApplicationController
-      skip_before_action :verify_authenticity_token
+
+      skip_before_action :require_login
+      skip_before_action :set_current_user
 
       def signup
         @user = User.new(user_params)

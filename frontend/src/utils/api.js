@@ -20,6 +20,11 @@ export const apiService = {
   // Players endpoints
   getPlayers: () => api.get('/players'),
 
+  // Contests endpoints
+  getContests: (data) => api.get('/contests', data),
+  getContest: (id) => api.get(`/contests/${id}`),
+  createContest: (data) => api.post('/contests', data),
+
   // Teams endpoints
   createTeam: (data) => api.post('/teams', data),
   getTeams: () => api.get('/teams'),
@@ -28,25 +33,27 @@ export const apiService = {
 
 // Error handler
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    return response.data;
+  },
   (error) => {
     console.error('API Error:', error);
     return Promise.reject(error?.response?.data || error);
   }
 );
 
-// // Request interceptor for API calls
-// api.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('authToken');
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+// Request interceptor for API calls
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default apiService; 

@@ -7,6 +7,9 @@ import ViewTeam from './components/ViewTeam';
 import Login from './components/Login';  // Import Login component
 import Players from './components/Players';
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
+import Signup from './components/Signup';
+import Contests from './components/Contests'; // Import your Contests component
+import ContestDetails from './components/ContestDetails'; // Import your ContestDetails component
 
 function App() {
   return (
@@ -19,6 +22,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/login" element={<Login />} />  {/* Add Login route */}
+        <Route path="/signup" element={<Signup />} />  {/* Add Login route */}
         <Route path="/create-team" element={<CreateTeam />} />
         <Route path="/view-team" element={<ViewTeam />} />
         <Route 
@@ -28,6 +32,22 @@ function App() {
               <Players />
             </ProtectedRoute>
           } 
+        />
+        <Route 
+          path="/contests" 
+          element={
+            <ProtectedRoute>
+              <Contests />
+            </ProtectedRoute>
+          } 
+        />
+        <Route
+          path="/contests/:id"
+          element={
+            <ProtectedRoute>
+              <ContestDetails />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </AuthProvider>

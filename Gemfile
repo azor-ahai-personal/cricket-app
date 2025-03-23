@@ -35,7 +35,6 @@ gem "thruster", require: false
 # Add MongoDB support
 gem 'mongoid'
 
-# Add JWT support
 gem 'jwt'
 
 # Add rack-cors for Cross-Origin Resource Sharing
@@ -69,3 +68,5 @@ group :test do
 end
 
 gem 'csv'
+
+gem 'simple_enum', '~> 2.3.0'

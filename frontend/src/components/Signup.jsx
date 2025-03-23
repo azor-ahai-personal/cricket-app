@@ -26,8 +26,8 @@ const Signup = () => {
         password,
         password_confirmation: passwordConfirmation
       });
-
-      const token = response.data.token;
+      
+      const token = response.token;
       login(token);
       navigate('/home');
     } catch (err) {

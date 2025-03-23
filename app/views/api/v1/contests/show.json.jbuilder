@@ -1,0 +1,1 @@
+json.partial! 'api/v1/contests/details', contest: @contest

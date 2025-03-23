@@ -17,6 +17,10 @@ const Home = () => {
     navigate('/players');
   };
 
+  const handleViewContests = () => {
+    navigate('/contests');
+  };
+
   return (
     <div className="home-container">
       <div className="buttons-container">
@@ -28,6 +32,9 @@ const Home = () => {
         </button>
         <button className="action-button" onClick={handleViewPlayers}>
           View Players
+        </button>
+        <button className="action-button" onClick={handleViewContests}>
+          Contests
         </button>
       </div>
     </div>

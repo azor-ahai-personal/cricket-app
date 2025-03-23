@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 from pathlib import Path
+import random
 
 class CricketScraper:
     def __init__(self, url):
@@ -121,12 +122,17 @@ class CricketScraper:
                     ti = cells[2].text.strip()
                     
                     if ti and ti != '-':
+                        total_impact = float(ti.replace(' ', '')) if ti.replace(' ', '').replace('.', '').replace('-', '').isdigit() else ti
+                        # Generate a random number between -1 and 1 and add it to total_impact
+                        random_adjustment = random.uniform(-1, 1)
+                        total_impact += random_adjustment
+                        total_impact = round(total_impact, 2)
                         mvp_data.append({
                             'Player': player,
                             'Team': team,
-                            'Total Impact': float(ti) if ti.replace('.', '').replace('-', '').isdigit() else ti
+                            'Total Impact': total_impact
                         })
-                        print(f"Found player: {player} - Team: {team} - TI: {ti}")
+                        print(f"Found player: {player} - Team: {team} - TI: {ti} (Adjusted TI: {total_impact})")
 
         if not mvp_data:
             print("No data found in table. Available tables:")
