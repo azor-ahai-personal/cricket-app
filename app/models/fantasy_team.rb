@@ -4,7 +4,7 @@ class FantasyTeam
 
     belongs_to :user
     has_many :participations
-    has_many :contests, through: :participations
+    has_many :contests
 
     has_many :players
 
