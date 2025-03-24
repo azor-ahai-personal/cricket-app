@@ -1,0 +1,1 @@
+json.partial! 'api/v1/fantasy_teams/details', team: @fantasy_team

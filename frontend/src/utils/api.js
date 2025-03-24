@@ -28,9 +28,9 @@ export const apiService = {
   joinContest: (data) => api.put('/contests/join', data),
 
   // Teams endpoints
-  createTeam: (data) => api.post('/teams', data),
-  getTeams: () => api.get('/ipl_teams'),
-
+  createTeam: (data) => api.post('/fantasy_teams', data),
+  getTeams: () => api.get('/fantasy_teams'),
+  getTeam: (id) => api.get(`/fantasy_teams/${id}`),
   getBootstrapData: (data) => api.get('/bootstraps/additional_bootstrapped', data),
 };
 

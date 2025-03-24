@@ -10,10 +10,10 @@ import Signup from './components/Signup';
 import Contests from './components/Contests'; // Import your Contests component
 import ContestDetails from './components/ContestDetails'; // Import your ContestDetails component
 import { useDispatch } from 'react-redux';
-import { setCurrentUser } from './features/auth/authSlice';
+import { setCurrentUser } from './store/authSlice';
 import { apiService } from './utils/api';
 import { useEffect } from 'react';
-
+import TeamDetails from './components/TeamDetails';
 function App() {
   const dispatch = useDispatch();
 
@@ -45,6 +45,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Teams />
+            </ProtectedRoute>
+          }  
+        />
+        <Route 
+          path="/teams/:id"
+          element={
+            <ProtectedRoute>
+              <TeamDetails />
             </ProtectedRoute>
           }  
         />

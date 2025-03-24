@@ -1,0 +1,62 @@
+/* frontend/src/components/TeamDetails.css */
+
+.team-details-container {
+  padding: 20px; /* Add padding around the container */
+  font-family: Arial, sans-serif; /* Set a default font */
+}
+
+h2 {
+  margin-bottom: 10px; /* Space below the main heading */
+}
+
+h3 {
+  margin-top: 20px; /* Space above the subheading */
+  margin-bottom: 10px; /* Space below the subheading */
+}
+
+table {
+  width: 100%; /* Full width of the container */
+  border-collapse: collapse; /* Merge borders for a cleaner look */
+  margin-top: 10px; /* Space above the table */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Light gray border for cells */
+  padding: 8px; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+}
+
+th {
+  background-color: #f2f2f2; /* Light gray background for header */
+  font-weight: bold; /* Bold text for header */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for even rows */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+td {
+  font-size: 14px; /* Set font size for table data */
+}
+
+
+.team-info {
+  margin-top: 20px; /* Space above the team info section */
+  padding: 15px; /* Padding inside the team info section */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+}
+
+.info-item {
+  margin-bottom: 10px; /* Space between info items */
+  font-size: 16px; /* Font size for the info items */
+}
+
+.info-item strong {
+  color: #333; /* Darker color for the labels */
+}

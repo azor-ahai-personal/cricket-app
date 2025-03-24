@@ -9,5 +9,8 @@ json.teams @teams do |team|
     json.role player.role
     json.indian player.indian
     json.credits player.credits
+    json.team_name team.name
+    json.team_id team.id
+    json.team_short_name team.short_name
   end
 end 
