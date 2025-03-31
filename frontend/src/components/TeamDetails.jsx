@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { uniq } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import apiService from '../utils/api';
 import { fetchPlayers } from '../store/playersSlice'; // Import the fetchPlayers action and selector
 import { getPlayerDetailsByIds } from '../utils/playerUtils'; // Import the utility function
 import './TeamDetails.css'; // Add styles for the team details page
-import { TEAM_CREDIT, MAX_PLAYERS } from '../constants'; // Import constants
+import { TEAM_CREDIT } from '../constants'; // Import constants
+import PlayerSelectionDialog from './PlayerSelectionDialog'; // Import the dialog component
 
 const TeamDetails = () => {
   const { id: teamId } = useParams();
@@ -16,6 +18,8 @@ const TeamDetails = () => {
   
   const players = useSelector((state) => state.players.players); // Access players
   const [playerDetails, setPlayerDetails] = useState([]); // State to hold player details
+  const [dialogOpen, setDialogOpen] = useState(false); // State for dialog visibility
+  const [isModified, setIsModified] = useState(false); // Track if player selection has changed
 
   const fetchTeamDetails = async () => {
     try {
@@ -41,11 +45,41 @@ const TeamDetails = () => {
   useEffect(() => {
     // Call the utility function whenever players are updated
     if (players && team) {
-      const ids = team.players.map(player => player.id);
+      const ids = uniq(team.players.map(player => player.id));
       const details = getPlayerDetailsByIds(players, ids);
       setPlayerDetails(details); // Update playerDetails state
     }
   }, [players, team]); // Run when players or team changes
+
+  console.log({playerDetails});
+
+  const usedCredits = playerDetails.reduce((sum, player) => sum + player.credits, 0);
+  const remainingCredits = TEAM_CREDIT - usedCredits;
+
+  const handleRemovePlayer = (playerId) => {
+    setPlayerDetails(prev => prev.filter(player => player.id !== playerId));
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleAddPlayers = (newPlayers) => {
+    setPlayerDetails(prev => [...newPlayers]);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleSave = async () => {
+    // Make the backend call to update the IPL team
+    const updatedPlayers = playerDetails.map(player => player.id); // Get the updated player IDs
+    await apiService.updateTeam(teamId, {players: updatedPlayers});
+    setIsModified(false); // Reset modified state
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -54,8 +88,7 @@ const TeamDetails = () => {
   if (error) {
     return <div>{error}</div>;
   }
-  const usedCredits = playerDetails.reduce((sum, player) => sum + player.credits, 0);
-  const remainingCredits = TEAM_CREDIT - usedCredits;
+
 
   return (
     <div className="team-details-container">
@@ -76,28 +109,50 @@ const TeamDetails = () => {
         </div>
       </div>
       <h3>Players</h3>
+      <button onClick={handleOpenDialog}>Add a Player</button> {/* Button to open dialog */}
       <table>
         <thead>
           <tr>
+            <th>Index</th>
             <th>Name</th>
             <th>Team</th>
             <th>Role</th>
             <th>Credits</th>
             <th>Indian/Overseas</th>
+            <th>Action</th> {/* Column for removing players */}
           </tr>
         </thead>
         <tbody>
-          {playerDetails.map(player => (
+          {playerDetails.map((player, index) => (
             <tr key={player.id}>
+              <td>{index + 1}</td>
               <td>{player.name}</td>
               <td>{player.team_short_name}</td>
               <td>{player.role.toLowerCase()}</td> {/* Convert role to lowercase */}
               <td>{player.credits}</td>
               <td>{player.indian ? 'Indian' : 'Overseas'}</td> {/* Determine Indian/Overseas */}
+              <td>
+                <button onClick={() => handleRemovePlayer(player.id)}>Remove</button> {/* Button to remove player */}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {dialogOpen && (
+        <PlayerSelectionDialog 
+          players={players} 
+          onClose={handleCloseDialog} 
+          onAddPlayers={handleAddPlayers} 
+          alreadySelectedPlayers={playerDetails} // Pass the already selected players
+        />
+      )}
+      <button 
+        onClick={handleSave} 
+        disabled={!isModified} // Disable if no changes
+        style={{ float: 'right' }} // Position the save button to the right
+      >
+        Save
+      </button>
     </div>
   );
 };

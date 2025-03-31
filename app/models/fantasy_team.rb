@@ -3,6 +3,10 @@ class FantasyTeam
     include Mongoid::Timestamps
 
     BUDGET = 1100
+    MAX_PLAYERS = 11
+    MIN_BATTERS = 3
+    MIN_BOWLERS = 3
+    MIN_ALL_ROUNDERS = 2
 
     belongs_to :user
     has_many :participations
