@@ -50,7 +50,7 @@ module Api
           @fantasy_team.update(published: true)
           return render json: { message: "Fantasy team published successfully" }, status: :ok
         end
-        render json: { message: "Invalid fantasy team" }, status: :unprocessable_entity
+        render json: { message: "Invalid fantasy team, #{message}" }, status: :unprocessable_entity
       end
 
       private
@@ -71,12 +71,12 @@ module Api
         if credit_sum > FantasyTeam::BUDGET
           return false, "Invalid credit sum: #{credit_sum}, should be less than #{FantasyTeam::BUDGET}"
         end
-        num_batters = @fantasy_team.players.select { |player| player.role == "BATTER" }.count
-        num_bowlers = @fantasy_team.players.select { |player| player.role == "BOWLER" }.count
-        num_all_rounders = @fantasy_team.players.select { |player| player.role == "ALL_ROUNDER" }.count
-        if num_batters < FantasyTeam::MIN_BATTERS || num_bowlers < FantasyTeam::MIN_BOWLERS || num_all_rounders < FantasyTeam::MIN_ALL_ROUNDERS
-          return false, "Invalid distribution of players, #{num_batters} batsmen, #{num_bowlers} bowlers, #{num_all_rounders} all-rounders. Should have at least #{FantasyTeam::MIN_BATTERS} batsmen, #{FantasyTeam::MIN_BOWLERS} bowlers and #{FantasyTeam::MIN_ALL_ROUNDERS} all-rounders"
-        end
+        # num_batters = @fantasy_team.players.select { |player| player.role == "BATTER" }.count
+        # num_bowlers = @fantasy_team.players.select { |player| player.role == "BOWLER" }.count
+        # num_all_rounders = @fantasy_team.players.select { |player| player.role == "ALL_ROUNDER" }.count
+        # if num_batters < FantasyTeam::MIN_BATTERS || num_bowlers < FantasyTeam::MIN_BOWLERS || num_all_rounders < FantasyTeam::MIN_ALL_ROUNDERS
+        #   return false, "Invalid distribution of players, #{num_batters} batsmen, #{num_bowlers} bowlers, #{num_all_rounders} all-rounders. Should have at least #{FantasyTeam::MIN_BATTERS} batsmen, #{FantasyTeam::MIN_BOWLERS} bowlers and #{FantasyTeam::MIN_ALL_ROUNDERS} all-rounders"
+        # end
         if @fantasy_team.captain_id.nil? || @fantasy_team.vice_captain_id.nil?
           return false, "Captain or vice captain not selected"
         end

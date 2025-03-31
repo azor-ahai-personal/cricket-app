@@ -43,6 +43,24 @@ td {
   font-size: 14px; /* Set font size for table data */
 }
 
+.publish-button {
+  background-color: #007bff; /* Blue background color */
+  color: white; /* White text color */
+  border: none; /* Remove borders */
+  padding: 10px 20px; /* Padding inside the button */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  margin-bottom: 10px; /* Space below the button */
+}
+
+.publish-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.publish-button:disabled {
+  background-color: #6c757d; /* Gray background color when disabled */
+  cursor: not-allowed; /* Change cursor to not-allowed when disabled */
+}
 
 .team-info {
   margin-top: 20px; /* Space above the team info section */
@@ -108,4 +126,49 @@ td {
   padding: 3px 8px; /* Smaller padding for badges */
   border-radius: 12px; /* Rounded corners */
   margin-left: 5px; /* Space between name and badge */
+}
+
+/* Add this to your TeamDetails.css file */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.confirm-dialog {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.confirm-dialog button {
+  margin: 10px;
+}
+
+/* Add this to your TeamDetails.css file */
+
+button:disabled {
+  background-color: #6c757d; /* Gray background color when disabled */
+  cursor: not-allowed; /* Change cursor to not-allowed when disabled */
+}
+
+/* Add this to your TeamDetails.css file */
+
+.published-message {
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+  padding: 10px;
+  border: 1px solid #f5c6cb; /* Red border */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 15px; /* Space below the message */
 }

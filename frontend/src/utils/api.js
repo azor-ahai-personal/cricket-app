@@ -32,6 +32,7 @@ export const apiService = {
   getTeams: () => api.get('/fantasy_teams'),
   getTeam: (id) => api.get(`/fantasy_teams/${id}`),
   updateTeam: (id, data) => api.put(`/fantasy_teams/${id}`, data),
+  publishTeam: (id) => api.put(`/fantasy_teams/${id}/publish`),
 
 
   getBootstrapData: (data) => api.get('/bootstraps/additional_bootstrapped', data),

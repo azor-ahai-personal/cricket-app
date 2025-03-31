@@ -103,8 +103,7 @@ const Teams = () => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Players</th>
-            <th>Total Points</th>
+            <th>Published Status</th>
           </tr>
         </thead>
         <tbody>
@@ -113,10 +112,10 @@ const Teams = () => {
               key={team.id}
               className="team-row"
               onClick={() => handleRowClick(team.id)} // Make the row clickable
+              style={{ backgroundColor: team.published ? '#d4edda' : 'transparent' }} // Light green for published teams
             >
               <td>{team.name}</td>
-              <td>{team.players?.join(', ')}</td>
-              <td>{team.total_points}</td>
+              <td>{team.published ? 'Published' : 'Not Published'}</td> {/* Display published status */}
             </tr>
           ))}
         </tbody>
