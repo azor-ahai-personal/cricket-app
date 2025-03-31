@@ -33,32 +33,32 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
   const playerSelectionDisabled = selectedPlayers.length >= MAX_PLAYERS || totalCredits >= TEAM_CREDIT;
 
   return (
-    <div className="dialog-overlay">
-      <div className="dialog-content">
+    <div className="dialog-overlay-player-selection-dialog">
+      <div className="dialog-content-player-selection-dialog">
         <h3>Select Players</h3>
-        <div className="selected-players">
+        <div className="selected-players-player-selection-dialog">
           {selectedPlayers.map(player => (
             <span 
               key={player.id} 
-              className="badge" 
+              className="badge-player-selection-dialog" 
               onClick={() => handleRemoveSelectedPlayer(player)} // Remove player on badge click
             >
               {player.name} - {player.role} - {player.credits}
             </span>
           ))}
         </div>
-        <div className="total-credits">
+        <div className="total-credits-player-selection-dialog">
           <strong>Total Credits of Selected Players: </strong> {totalCredits}
         </div>
         {selectedPlayers.length >= MAX_PLAYERS && (
-          <div className="error-message">11 players already selected. Please remove a player to add a new one.</div>
+          <div className="error-message-player-selection-dialog">11 players already selected. Please remove a player to add a new one.</div>
         )}
         {totalCredits >= TEAM_CREDIT && (
-          <div className="error-message">Total credits exceed the limit of {TEAM_CREDIT}. Please adjust your selection.</div>
+          <div className="error-message-player-selection-dialog">Total credits exceed the limit of {TEAM_CREDIT}. Please adjust your selection.</div>
         )}
-        <div className="player-dropdowns">
+        <div className="player-dropdowns-player-selection-dialog">
           {teams.map(team => (
-            <div key={team} className="team-dropdown">
+            <div key={team} className="team-dropdown-player-selection-dialog">
               <label>{team}</label>
               <select 
                 onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
@@ -81,7 +81,7 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
           ))}
           {/* Add dropdowns for player roles */}
           {roles.map(role => (
-            <div key={role} className="role-dropdown">
+            <div key={role} className="role-dropdown-player-selection-dialog">
               <label>{role}</label>
               <select 
                 onChange={(e) => handleSelectPlayer(players.find(p => p.role.toUpperCase() === role))}

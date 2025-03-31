@@ -55,10 +55,10 @@ const Players = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="players-container">
-      <div className="header">
+    <div className="players-container-players">
+      <div className="header-players">
         <IconButton 
-          className="home-button"
+          className="home-button-players"
           onClick={handleHomeClick}
           size="small"
         >
@@ -66,18 +66,18 @@ const Players = () => {
         </IconButton>
         <h1>IPL Teams</h1>
       </div>
-      <div className="teams-grid">
+      <div className="teams-grid-players">
         {teams.map((team) => (
           <Paper 
             key={team.id} 
-            className="team-badge"
+            className="team-badge-players"
             onClick={() => handleOpenDialog(team)}
             elevation={3}
           >
-            <Typography className="team-name">
+            <Typography className="team-name-players">
               {team.short_name}
             </Typography>
-            <Typography className="team-full-name">
+            <Typography className="team-full-name-players">
               {team.name}
             </Typography>
           </Paper>
@@ -101,24 +101,24 @@ const Players = () => {
               </Box>
             </DialogTitle>
             <DialogContent>
-              <div className="players-grid">
+              <div className="players-grid-players">
                 {selectedTeam.players.map((player) => (
-                  <div key={player.id} className="player-card">
+                  <div key={player.id} className="player-card-players">
                     <h3>{player.name}</h3>
-                    <div className="player-details">
+                    <div className="player-details-players">
                       <p>
-                        <span className="label">Role:</span> 
-                        <span className={`role ${player.role.toLowerCase()}`}>{player.role}</span>
+                        <span className="label-players">Role:</span> 
+                        <span className={`role-players ${player.role.toLowerCase()}`}>{player.role}</span>
                       </p>
                       <p>
-                        <span className="label">Type:</span> 
-                        <span className={player.indian ? 'indian' : 'overseas'}>
+                        <span className="label-players">Type:</span> 
+                        <span className={player.indian ? 'indian-players' : 'overseas-players'}>
                           {player.indian ? 'Indian' : 'Overseas'}
                         </span>
                       </p>
                       <p>
-                        <span className="label">Credits:</span> 
-                        <span className="credits">{player.credits}</span>
+                        <span className="label-players">Credits:</span> 
+                        <span className="credits-players">{player.credits}</span>
                       </p>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 /* Contests.css */
 
 /* Modal background overlay */
-.modal {
+.modal-contests {
   display: flex;
   position: fixed;
   z-index: 1000; /* Ensure the modal is on top */
@@ -14,7 +14,7 @@
 }
 
 /* Modal content */
-.modal-content {
+.modal-content-contests {
   background-color: #ffffff; /* White background for the modal */
   margin: 10% auto; /* Center the modal vertically and horizontally */
   padding: 25px;
@@ -26,7 +26,7 @@
 }
 
 /* Close button */
-.close {
+.close-contests {
   color: #aaa; /* Light gray color */
   float: right; /* Align to the right */
   font-size: 28px; /* Font size */
@@ -35,62 +35,62 @@
   transition: color 0.2s ease; /* Smooth transition for hover effect */
 }
 
-.close:hover,
-.close:focus {
+.close-contests:hover,
+.close-contests:focus {
   color: #333; /* Darker gray on hover/focus */
 }
 
 /* Table styles */
-.contest-table {
+.contest-table-contests {
   width: 100%; /* Full width */
   border-collapse: collapse; /* Collapse borders */
   margin-top: 20px; /* Add some margin above the table */
   font-family: 'Arial', sans-serif; /* Modern font */
 }
 
-.contest-table th, .contest-table td {
+.contest-table-contests th, .contest-table-contests td {
   padding: 12px 15px; /* Padding for table cells */
   text-align: left; /* Align text to the left */
   border-bottom: 1px solid #e0e0e0; /* Light border for separation */
 }
 
-.contest-table th {
+.contest-table-contests th {
   background-color: #f8f9fa; /* Light gray background for header */
   font-weight: 600; /* Semi-bold text for headers */
   color: #333; /* Dark text color */
 }
 
 /* Table row styles */
-.contest-row {
+.contest-row-contests {
   cursor: pointer; /* Pointer cursor for clickable rows */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.contest-row:hover {
+.contest-row-contests:hover {
   background-color: #f1f1f1; /* Light gray background on hover */
 }
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
-  .modal-content {
+  .modal-content-contests {
     width: 95%; /* Wider modal for smaller screens */
     margin: 5% auto; /* Adjust margin for smaller screens */
   }
 
-  .contest-table th, .contest-table td {
+  .contest-table-contests th, .contest-table-contests td {
     padding: 10px; /* Smaller padding for smaller screens */
   }
 }
 
 /* Header and Button */
-.header {
+.header-contests {
   display: flex;
   align-items: center; /* Vertically center all items */
   gap: 20px; /* Add spacing between items */
   margin-bottom: 20px;
 }
 
-.home-button2 {
+.home-button2-contests {
   background-color: #007bff;
   color: white;
   border: none;
@@ -101,21 +101,21 @@
   margin-right: 0; /* Remove margin-right */
 }
 
-.home-button2:hover {
+.home-button2-contests:hover {
   background-color: #0056b3;
 }
 
-.contests-heading {
+.contests-heading-contests {
   margin: 0; /* Remove default margin */
   flex-grow: 1; /* Allow the heading to take up remaining space */
 }
 
-.buttons-container {
+.buttons-container-contests {
   display: flex;
   gap: 10px; /* Add spacing between buttons */
 }
 
-.action-button {
+.action-button-contests {
   background-color: #007bff;
   color: white;
   border: none;
@@ -125,11 +125,11 @@
   font-size: 16px;
 }
 
-.action-button:hover {
+.action-button-contests:hover {
   background-color: #0056b3;
 }
 
-.join-contest-button {
+.join-contest-button-contests {
   background-color: #28a745;
   color: white;
   border: none;
@@ -139,12 +139,12 @@
   font-size: 16px;
 }
 
-.join-contest-button:hover {
+.join-contest-button-contests:hover {
   background-color: #218838;
 }
 
 /* Dialog Box */
-.dialog-overlay {
+.dialog-overlay-contests {
   position: fixed;
   top: 0;
   left: 0;
@@ -157,7 +157,7 @@
   z-index: 1000;
 }
 
-.dialog-box {
+.dialog-box-contests {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -165,70 +165,70 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.dialog-box h3 {
+.dialog-box-contests h3 {
   margin-top: 0;
 }
 
-.form-group {
+.form-group-contests {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group-contests label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.form-group input {
+.form-group-contests input {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.form-actions {
+.form-actions-contests {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
-.form-actions button {
+.form-actions-contests button {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.form-actions button[type="submit"] {
+.form-actions-contests button[type="submit"] {
   background-color: #007bff;
   color: white;
 }
 
-.form-actions button[type="submit"]:hover {
+.form-actions-contests button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-.form-actions button[type="button"] {
+.form-actions-contests button[type="button"] {
   background-color: #6c757d;
   color: white;
 }
 
-.form-actions button[type="button"]:hover {
+.form-actions-contests button[type="button"]:hover {
   background-color: #5a6268;
 }
 
-.error {
+.error-contests {
   color: red;
   margin-bottom: 10px;
 }
 
 /* Actions Dropdown */
-.actions-dropdown {
+.actions-dropdown-contests {
   position: relative;
   display: inline-block;
 }
 
-.actions-button {
+.actions-button-contests {
   background: none;
   border: none;
   cursor: pointer;
@@ -237,7 +237,7 @@
   color: #333;
 }
 
-.dropdown-content {
+.dropdown-content-contests {
   display: block;
   position: absolute;
   right: 0;
@@ -248,7 +248,7 @@
   white-space: nowrap; /* Ensure text stays on one line */
 }
 
-.dropdown-content button {
+.dropdown-content-contests   button {
   display: block;
   width: 100%;
   padding: 8px 16px;
@@ -259,6 +259,6 @@
   color: #333;
 }
 
-.dropdown-content button:hover {
+.dropdown-content-contests button:hover {
   background-color: #f1f1f1;
 }

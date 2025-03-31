@@ -1,4 +1,4 @@
-.login-container {
+.login-container-login {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
@@ -6,7 +6,7 @@
   border-radius: 5px;
 }
 
-.error {
+.error-login {
   color: red;
   margin-bottom: 10px;
 }
@@ -39,4 +39,14 @@ button {
 
 button:hover {
   background-color: #0056b3;
+} 
+
+.link-login {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link-login:hover {
+  color: #0056b3;
 } 

@@ -1,4 +1,4 @@
-.user-avatar {
+.user-avatar-user-avatar {
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -14,7 +14,7 @@
 }
 
 /* Tooltip styles */
-.user-avatar .tooltip {
+.user-avatar-user-avatar .tooltip-user-avatar {
   visibility: hidden;
   width: max-content;
   background-color: #333;
@@ -31,7 +31,7 @@
   transition: opacity 0.3s;
 }
 
-.user-avatar:hover .tooltip {
+.user-avatar-user-avatar:hover .tooltip-user-avatar {
   visibility: visible;
   opacity: 1;
 }

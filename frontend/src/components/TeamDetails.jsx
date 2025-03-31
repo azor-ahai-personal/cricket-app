@@ -152,8 +152,8 @@ const TeamDetails = () => {
 
   // Confirmation Dialog Component
   const ConfirmationDialog = ({ onCancel, onConfirm }) => (
-    <div className="overlay">
-      <div className="confirm-dialog">
+    <div className="overlay-team-details">
+      <div className="confirm-dialog-team-details">
         <p>Once published, you can't make changes to your team. Do you still want to publish?</p>
         <button onClick={onCancel}>Cancel</button>
         <button onClick={onConfirm}>Yes</button>
@@ -170,9 +170,9 @@ const TeamDetails = () => {
   }
 
   return (
-    <div className="team-details-container">
+    <div className="team-details-container-team-details">
       {isPublished && (
-        <div className="published-message">
+        <div className="published-message-team-details">
           This team is published and no changes can be made to it.
         </div>
       )}
@@ -181,21 +181,21 @@ const TeamDetails = () => {
       <button 
         onClick={handlePublish} 
         disabled={!isPublishEnabled() || isPublished} // Disable if conditions are not met
-        className="publish-button"
+        className="publish-button-team-details"
       >
         Publish
       </button>
-      <div className="team-info">
-        <div className="info-item">
+      <div className="team-info-team-details">
+        <div className="info-item-team-details">
           <strong>Total Credits:</strong> {TEAM_CREDIT}
         </div>
-        <div className="info-item">
+        <div className="info-item-team-details">
           <strong>Current Number of Players:</strong> {team.players.length}
         </div>
-        <div className="info-item">
+        <div className="info-item-team-details">
           <strong>Used Credits:</strong> {usedCredits}
         </div>
-        <div className="info-item">
+        <div className="info-item-team-details">
           <strong>Remaining Credits:</strong> {remainingCredits}
         </div>
       </div>
@@ -227,9 +227,9 @@ const TeamDetails = () => {
               <td>{player.credits}</td>
               <td>{player.indian ? 'Indian' : 'Overseas'}</td> {/* Determine Indian/Overseas */}
               <td>
-                <div className="actions-dropdown">
+                <div className="actions-dropdown-team-details">
                   <button
-                    className="actions-button"
+                    className="actions-button-team-details"
                     disabled={isPublished}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -239,7 +239,7 @@ const TeamDetails = () => {
                     &#8942;
                   </button>
                   {openDropdownId === player.id && (
-                    <div className="dropdown-content">
+                    <div className="dropdown-content-team-details">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

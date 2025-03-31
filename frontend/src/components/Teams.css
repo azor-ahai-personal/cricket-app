@@ -1,15 +1,15 @@
-.teams-container {
+.teams-container-teams {
   padding: 20px;
 }
 
-.header {
+.header-teams {
   display: flex;
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.home-button {
+.home-button-teams {
   background-color: #007bff;
   color: white;
   border: none;
@@ -19,33 +19,33 @@
   font-size: 16px;
 }
 
-.home-button:hover {
+.home-button-teams:hover {
   background-color: #0056b3;
 }
 
-.teams-table {
+.teams-table-teams {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.teams-table th, .teams-table td {
+.teams-table-teams th, .teams-table-teams td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.teams-table th {
+.teams-table-teams th {
   background-color: #f8f9fa;
   font-weight: 600;
   color: #333;
 }
 
-.team-row {
+.team-row-teams {
   transition: background-color 0.3s; /* Smooth transition for background color */
   cursor: pointer;
 }
 
-.team-row:hover {
+.team-row-teams:hover {
   background-color: #f1f1f1; /* Light gray on hover */
 }

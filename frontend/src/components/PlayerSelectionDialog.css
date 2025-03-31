@@ -1,6 +1,6 @@
 /* frontend/src/components/PlayerSelectionDialog.css */
 
-.dialog-overlay {
+.dialog-overlay-player-selection-dialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-.dialog-content {
+.dialog-content-player-selection-dialog {
     background: white;
     padding: 20px;
     border-radius: 8px; /* Slightly larger border radius for a softer look */
@@ -27,11 +27,11 @@ h3 {
     color: #333; /* Darker color for the heading */
 }
 
-.selected-players {
+.selected-players-player-selection-dialog {
     margin-bottom: 15px; /* Space below selected players */
 }
 
-.badge {
+.badge-player-selection-dialog {
     display: inline-block;
     background: #007bff;
     color: white;
@@ -42,25 +42,25 @@ h3 {
     transition: background 0.3s; /* Smooth transition for hover effect */
 }
 
-.badge:hover {
+.badge-player-selection-dialog:hover {
     background: #0056b3; /* Darker blue on hover */
 }
 
-.player-dropdowns {
+.player-dropdowns-player-selection-dialog {
     margin-top: 10px; /* Space above the dropdowns */
 }
 
-.team-role-dropdown {
+.team-role-dropdown-player-selection-dialog {
     display: flex; /* Use flexbox to align team and role dropdowns side by side */
     margin-bottom: 15px; /* Space between dropdowns */
 }
 
-.team-dropdown, .role-dropdown {
+.team-dropdown-player-selection-dialog, .role-dropdown-player-selection-dialog {
     flex: 1; /* Allow both dropdowns to take equal space */
     margin-right: 10px; /* Space between team and role dropdowns */
 }
 
-.team-dropdown label, .role-dropdown label {
+.team-dropdown-player-selection-dialog label, .role-dropdown-player-selection-dialog label {
     display: block; /* Make label block to align with dropdown */
     margin-bottom: 5px; /* Space below the label */
     font-weight: bold; /* Bold labels for better visibility */
@@ -100,7 +100,7 @@ button:last-child {
     margin-right: 0; /* Remove margin from the last button */
 }
 
-.error-message {
+.error-message-player-selection-dialog {
     color: red; /* Red color for error messages */
     margin-top: 10px; /* Space above the error message */
     font-weight: bold; /* Bold text for emphasis */

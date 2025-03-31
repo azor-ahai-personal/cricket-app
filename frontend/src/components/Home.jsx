@@ -18,15 +18,15 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
-      <div className="buttons-container">
-        <button className="action-button" onClick={handleCreateTeam}>
+    <div className="home-container-home">
+      <div className="buttons-container-home">
+        <button className="action-button-home" onClick={handleCreateTeam}>
           Your Teams
         </button>
-        <button className="action-button" onClick={handleViewPlayers}>
+        <button className="action-button-home" onClick={handleViewPlayers}>
           View Players
         </button>
-        <button className="action-button" onClick={handleViewContests}>
+        <button className="action-button-home" onClick={handleViewContests}>
           Contests
         </button>
       </div>

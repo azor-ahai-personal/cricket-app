@@ -10,9 +10,9 @@ const UserAvatar = ({ name }) => {
     .toUpperCase();
 
   return (
-    <div className="user-avatar">
+    <div className="user-avatar-user-avatar">
       {initials}
-      <span className="tooltip">{name}</span>
+      <span className="tooltip-user-avatar">{name}</span>
     </div>
   );
 };

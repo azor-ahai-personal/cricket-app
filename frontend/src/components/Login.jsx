@@ -29,10 +29,10 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container-login">
       <form onSubmit={handleSubmit}>
         <h2>Login</h2>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error-login">{error}</div>}
         <div>
           <label>Email:</label>
           <input
@@ -54,7 +54,7 @@ const Login = () => {
         <button type="submit">Login</button>
         <p>
           Don't have an account?{' '}
-          <span className="link" onClick={() => navigate('/signup')}>
+          <span className="link-login" onClick={() => navigate('/signup')}>
             Sign Up
           </span>
         </p>

@@ -55,17 +55,17 @@ const Teams = () => {
   }
 
   return (
-    <div className="teams-container">
-      <div className="header">
+    <div className="teams-container-teams">
+      <div className="header-teams">
         <button
-          className="home-button"
+          className="home-button-teams"
           onClick={() => navigate('/')} // Navigate to the home page
         >
           Home
         </button>
         <h2>My Teams</h2>
         <button
-          className="action-button"
+          className="action-button-teams"
           onClick={() => setIsDialogOpen(true)} // Open the dialog
         >
           Create Team
@@ -74,11 +74,11 @@ const Teams = () => {
 
       {/* Dialog for creating a new team */}
       {isDialogOpen && (
-        <div className="dialog-overlay">
-          <div className="dialog-box">
+        <div className="dialog-overlay-teams">
+          <div className="dialog-box-teams">
             <h3>Create Team</h3>
             <form onSubmit={handleCreateTeam}>
-              <div className="form-group">
+              <div className="form-group-teams">
                 <label>Team Name</label>
                 <input
                   type="text"
@@ -87,8 +87,8 @@ const Teams = () => {
                   required
                 />
               </div>
-              {error && <p className="error">{error}</p>}
-              <div className="form-actions">
+              {error && <p className="error-teams">{error}</p>}
+              <div className="form-actions-teams">
                 <button type="button" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </button>
@@ -99,7 +99,7 @@ const Teams = () => {
         </div>
       )}
 
-      <table className="teams-table">
+      <table className="teams-table-teams">
         <thead>
           <tr>
             <th>Name</th>
@@ -110,7 +110,7 @@ const Teams = () => {
           {teams?.map(team => (
             <tr
               key={team.id}
-              className="team-row"
+              className="team-row-teams"
               onClick={() => handleRowClick(team.id)} // Make the row clickable
               style={{ backgroundColor: team.published ? '#d4edda' : 'transparent' }} // Light green for published teams
             >

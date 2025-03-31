@@ -1,6 +1,6 @@
 /* frontend/src/components/TeamDetails.css */
 
-.team-details-container {
+.team-details-container-team-details {
   padding: 20px; /* Add padding around the container */
   font-family: Arial, sans-serif; /* Set a default font */
 }
@@ -14,13 +14,13 @@ h3 {
   margin-bottom: 10px; /* Space below the subheading */
 }
 
-table {
+table-team-details {
   width: 100%; /* Full width of the container */
   border-collapse: collapse; /* Merge borders for a cleaner look */
   margin-top: 10px; /* Space above the table */
 }
 
-th, td {
+th-team-details, td-team-details {
   border: 1px solid #ddd; /* Light gray border for cells */
   padding: 8px; /* Padding inside cells */
   text-align: left; /* Align text to the left */
@@ -43,7 +43,7 @@ td {
   font-size: 14px; /* Set font size for table data */
 }
 
-.publish-button {
+.publish-button-team-details {
   background-color: #007bff; /* Blue background color */
   color: white; /* White text color */
   border: none; /* Remove borders */
@@ -53,16 +53,16 @@ td {
   margin-bottom: 10px; /* Space below the button */
 }
 
-.publish-button:hover {
+.publish-button-team-details:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
 
-.publish-button:disabled {
+.publish-button-team-details:disabled {
   background-color: #6c757d; /* Gray background color when disabled */
   cursor: not-allowed; /* Change cursor to not-allowed when disabled */
 }
 
-.team-info {
+.team-info-team-details {
   margin-top: 20px; /* Space above the team info section */
   padding: 15px; /* Padding inside the team info section */
   border: 1px solid #ddd; /* Light gray border */
@@ -70,16 +70,16 @@ td {
   background-color: #f9f9f9; /* Light background color */
 }
 
-.info-item {
+.info-item-team-details {
   margin-bottom: 10px; /* Space between info items */
   font-size: 16px; /* Font size for the info items */
 }
 
-.info-item strong {
+.info-item-team-details strong {
   color: #333; /* Darker color for the labels */
 }
 
-.actions-dropdown {
+.actions-dropdown-team-details {
   position: relative;
   display: inline-block;
 }

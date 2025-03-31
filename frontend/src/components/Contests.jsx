@@ -102,27 +102,27 @@ const Contests = () => {
   }
 
   return (
-    <div className="contests-container">
+    <div className="contests-container-contests">
       {/* Popup */}
       {showPopup && (
-        <div className="popup">
+        <div className="popup-contests">
           Passkey copied to clipboard!
         </div>
       )}
 
-      <div className="header">
+      <div className="header-contests">
         <button
-          className="home-button2"
+          className="home-button2-contests"
           onClick={() => navigate('/')} // Navigate to the home page
         >
           Home
         </button>
         <h2>Contests</h2>
-        <div className="buttons-container">
-          <button className="action-button" onClick={() => setIsDialogOpen(true)}>
+        <div className="buttons-container-contests">
+          <button className="action-button-contests" onClick={() => setIsDialogOpen(true)}>
             Create Contest
           </button>
-          <button className="action-button join-contest-button" onClick={() => setIsJoinDialogOpen(true)}>
+          <button className="action-button-contests join-contest-button-contests" onClick={() => setIsJoinDialogOpen(true)}>
             Join Contest
           </button>
         </div>
@@ -130,11 +130,11 @@ const Contests = () => {
 
       {/* Dialog Box */}
       {isDialogOpen && (
-        <div className="dialog-overlay">
-          <div className="dialog-box">
+        <div className="dialog-overlay-contests">
+          <div className="dialog-box-contests">
             <h3>Create Contest</h3>
             <form onSubmit={handleCreateContest}>
-              <div className="form-group">
+              <div className="form-group-contests">
                 <label>Name</label>
                 <input
                   type="text"
@@ -143,7 +143,7 @@ const Contests = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group-contests">
                 <label>Entry Fee</label>
                 <input
                   type="number"
@@ -152,8 +152,8 @@ const Contests = () => {
                   required
                 />
               </div>
-              {error && <p className="error">{error}</p>}
-              <div className="form-actions">
+              {error && <p className="error-contests">{error}</p>}
+              <div className="form-actions-contests">
                 <button type="button" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </button>
@@ -166,11 +166,11 @@ const Contests = () => {
 
       {/* Join Contest Dialog */}
       {isJoinDialogOpen && (
-        <div className="dialog-overlay">
-          <div className="dialog-box">
+        <div className="dialog-overlay-contests">
+          <div className="dialog-box-contests">
             <h3>Join Contest</h3>
             <form onSubmit={handleJoinContest}>
-              <div className="form-group">
+              <div className="form-group-contests">
                 <label>Passkey</label>
                 <input
                   type="text"
@@ -179,8 +179,8 @@ const Contests = () => {
                   required
                 />
               </div>
-              {error && <p className="error">{error}</p>}
-              <div className="form-actions">
+              {error && <p className="error-contests">{error}</p>}
+              <div className="form-actions-contests">
                 <button type="button" onClick={() => setIsJoinDialogOpen(false)}>
                   Cancel
                 </button>
@@ -192,7 +192,7 @@ const Contests = () => {
       )}
 
       {/* Table */}
-      <table className="contest-table">
+      <table className="contest-table-contests">
         <thead>
           <tr>
             <th>Name</th>
@@ -205,7 +205,7 @@ const Contests = () => {
         </thead>
         <tbody>
           {contests.map(contest => (
-            <tr key={contest.id} className="contest-row">
+            <tr key={contest.id} className="contest-row-contests">
               <td onClick={() => handleRowClick(contest.id)}>{contest.name}</td>
               <td onClick={() => handleRowClick(contest.id)}>{contest.passkey}</td>
               <td onClick={() => handleRowClick(contest.id)}>
@@ -214,9 +214,9 @@ const Contests = () => {
               <td onClick={() => handleRowClick(contest.id)}>{contest.active ? "Yes" : "No"}</td>
               <td onClick={() => handleRowClick(contest.id)}>{contest.total_teams}</td>
               <td>
-                <div className="actions-dropdown">
+                <div className="actions-dropdown-contests">
                   <button
-                    className="actions-button"
+                    className="actions-button-contests"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleDropdown(contest.id);
@@ -225,7 +225,7 @@ const Contests = () => {
                     &#8942; {/* Three dots icon */}
                   </button>
                   {openDropdownId === contest.id && (
-                    <div className="dropdown-content">
+                    <div className="dropdown-content-contests">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

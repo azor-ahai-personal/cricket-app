@@ -1,5 +1,5 @@
 /* Make sure the container fills the entire viewport */
-.home-container {
+.home-container-home {
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -9,7 +9,7 @@
 }
 
 /* Ensure buttons are aligned in a row */
-.buttons-container {
+.buttons-container-home {
   display: flex; 
   gap: 20px; 
   justify-content: center;
@@ -18,7 +18,7 @@
 }
 
 /* Style buttons */
-.action-button {
+.action-button-home {
   width: 150px; /* Fixed width for each button */
   height: 50px; /* Fixed height for each button */
   padding: 0 20px;
@@ -33,6 +33,6 @@
   z-index: 2;
 }
 
-.home-button:hover {
+.action-button-home:hover {
   background-color: #0056b3;
 }
