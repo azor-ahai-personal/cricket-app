@@ -35,7 +35,8 @@ module Api
         if update_params[:players].count > FantasyTeam::MAX_PLAYERS
           return render json: { message: "Invalid number of players: #{update_params[:players].count}, should have #{FantasyTeam::MAX_PLAYERS} players" }, status: :unprocessable_entity
         end
-        @fantasy_team.update!(players: players)
+        players = Player.where(:id.in => update_params[:players]).to_a
+        @fantasy_team.update!(players: players, captain_id: update_params[:captain_id], vice_captain_id: update_params[:vice_captain_id])
         render 'api/v1/fantasy_teams/show', formats: [:json]
       end
 
@@ -59,7 +60,7 @@ module Api
       end
 
       def fantasy_team_update_params
-        params.permit(players: [])
+        params.permit(:captain_id, :vice_captain_id, :players => [])
       end
 
       def validate_fantasy_team

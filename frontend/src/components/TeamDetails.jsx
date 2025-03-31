@@ -20,6 +20,9 @@ const TeamDetails = () => {
   const [playerDetails, setPlayerDetails] = useState([]); // State to hold player details
   const [dialogOpen, setDialogOpen] = useState(false); // State for dialog visibility
   const [isModified, setIsModified] = useState(false); // Track if player selection has changed
+  const [captainId, setCaptainId] = useState(null);
+  const [viceCaptainId, setViceCaptainId] = useState(null);
+  const [openDropdownId, setOpenDropdownId] = useState(null); // Track which dropdown is open
 
   const fetchTeamDetails = async () => {
     try {
@@ -48,17 +51,41 @@ const TeamDetails = () => {
       const ids = uniq(team.players.map(player => player.id));
       const details = getPlayerDetailsByIds(players, ids);
       setPlayerDetails(details); // Update playerDetails state
+      setCaptainId(team.captain_id);
+      setViceCaptainId(team.vice_captain_id);
     }
   }, [players, team]); // Run when players or team changes
-
-  console.log({playerDetails});
 
   const usedCredits = playerDetails.reduce((sum, player) => sum + player.credits, 0);
   const remainingCredits = TEAM_CREDIT - usedCredits;
 
   const handleRemovePlayer = (playerId) => {
     setPlayerDetails(prev => prev.filter(player => player.id !== playerId));
+    if (captainId === playerId) {
+      setCaptainId(null);
+    }
+    if (viceCaptainId === playerId) {
+      setViceCaptainId(null);
+    }
     setIsModified(true); // Mark as modified
+  };
+
+  const handleActionClick = (playerId, action) => {
+    const player = playerDetails.find(p => p.id === playerId);
+    if (action === 'remove') {
+      handleRemovePlayer(playerId);
+    } else if (action === 'captain') {
+      if (viceCaptainId === playerId) {
+        setViceCaptainId(null); // Remove vice-captain if the same player is made captain
+      }
+      setCaptainId(player.id);
+    } else if (action === 'vice-captain') {
+      if (captainId === playerId) {
+        setCaptainId(null); // Remove captain if the same player is made vice-captain
+      }
+      setViceCaptainId(player.id);
+    }
+    setIsModified(true);
   };
 
   const handleOpenDialog = () => {
@@ -77,8 +104,18 @@ const TeamDetails = () => {
   const handleSave = async () => {
     // Make the backend call to update the IPL team
     const updatedPlayers = playerDetails.map(player => player.id); // Get the updated player IDs
-    await apiService.updateTeam(teamId, {players: updatedPlayers});
+    await apiService.updateTeam(
+      teamId, { 
+        players: updatedPlayers, 
+        captain_id: captainId, 
+        vice_captain_id: viceCaptainId
+      }
+    );
     setIsModified(false); // Reset modified state
+  };
+
+  const toggleDropdown = (playerId) => {
+    setOpenDropdownId(openDropdownId === playerId ? null : playerId);
   };
 
   if (loading) {
@@ -88,7 +125,6 @@ const TeamDetails = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
 
   return (
     <div className="team-details-container">
@@ -119,20 +155,65 @@ const TeamDetails = () => {
             <th>Role</th>
             <th>Credits</th>
             <th>Indian/Overseas</th>
-            <th>Action</th> {/* Column for removing players */}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {playerDetails.map((player, index) => (
             <tr key={player.id}>
               <td>{index + 1}</td>
-              <td>{player.name}</td>
+              <td>
+                {player.name} 
+                {captainId === player.id && <span className="badge-team-details">Captain</span>}
+                {viceCaptainId === player.id && <span className="badge-team-details">Vice-Captain</span>}
+              </td>
               <td>{player.team_short_name}</td>
               <td>{player.role.toLowerCase()}</td> {/* Convert role to lowercase */}
               <td>{player.credits}</td>
               <td>{player.indian ? 'Indian' : 'Overseas'}</td> {/* Determine Indian/Overseas */}
               <td>
-                <button onClick={() => handleRemovePlayer(player.id)}>Remove</button> {/* Button to remove player */}
+                <div className="actions-dropdown">
+                  <button
+                    className="actions-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleDropdown(player.id);
+                    }}
+                  >
+                    &#8942;
+                  </button>
+                  {openDropdownId === player.id && (
+                    <div className="dropdown-content">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleActionClick(player.id, 'remove')
+                          setOpenDropdownId(null);
+                        }}
+                      >
+                        Remove
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleActionClick(player.id, 'captain')
+                          setOpenDropdownId(null);
+                        }}
+                      >
+                        Make Captain
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleActionClick(player.id, 'vice-captain')
+                          setOpenDropdownId(null); 
+                        }}
+                      >
+                        Make Vice-Captain
+                      </button>
+                    </div>
+                  )}
+                </div>
               </td>
             </tr>
           ))}

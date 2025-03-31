@@ -60,3 +60,52 @@ td {
 .info-item strong {
   color: #333; /* Darker color for the labels */
 }
+
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.actions-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+  color: #333;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  z-index: 1;
+  white-space: nowrap; /* Ensure text stays on one line */
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+.badge-team-details {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 3px 8px; /* Smaller padding for badges */
+  border-radius: 12px; /* Rounded corners */
+  margin-left: 5px; /* Space between name and badge */
+}
