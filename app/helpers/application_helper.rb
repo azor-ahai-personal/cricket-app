@@ -8,7 +8,7 @@ module ApplicationHelper
     end
 
     def require_login
-        # return if %w[signup login].include?(params[:action]) 
+        return if %w[signup login].include?(params[:action]) 
 
         unless signed_in?
             render json: { error: 'Unauthorized' }, status: :unauthorized
