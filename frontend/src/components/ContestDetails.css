@@ -99,3 +99,28 @@
   margin-top: 20px;
   margin-bottom: 16px; /* Space below each select */
 }
+
+.captain-tag {
+  background-color: #267ff3; /* Yellow background */
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin-left: 5px;
+}
+
+.vice-captain-tag {
+  background-color: #6b9bf3; /* Orange background */
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin-left: 5px;
+}
+
+.players-table, .selections-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.players-table th, .players-table td, .selections-table th, .selections-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}

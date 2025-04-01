@@ -4,7 +4,7 @@ import apiService from '../utils/api';
 import './ContestDetails.css'; // Import the CSS file
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlayers } from '../store/playersSlice';
-import { Select, MenuItem, Chip, InputLabel, FormControl } from '@mui/material';
+import { Select, MenuItem, Chip, InputLabel, FormControl, Card, CardContent, Typography, Grid } from '@mui/material';
 
 const ContestDetails = () => {
   const { id } = useParams(); // Get the contest ID from the URL
@@ -118,25 +118,132 @@ const ContestDetails = () => {
   if (!players || players.length === 0) return <div>No players available.</div>;
 
   const selectedTeam = allTeams.find(team => team.owner.id === currentUser.id);
+  const orangeCapPlayer = players.find(player => player.id === selectedTeam?.orange_cap_player_id);
+  const purpleCapPlayer = players.find(player => player.id === selectedTeam?.purple_cap_player_id);
+  const playerOfTheTournament = players.find(player => player.id === selectedTeam?.player_of_the_tournament_id);
+  const captain = players.find(player => player.id === selectedTeam?.captain_id);
+  const viceCaptain = players.find(player => player.id === selectedTeam?.vice_captain_id);
+  const topTeams = teams.filter(team => selectedTeam?.top_teams.includes(team.id));
+
+  const getRoleString = (role) => {
+    if (role === 'BATTER') return 'Batsman';
+    if (role === 'BOWLER') return 'Bowler';
+    if (role === 'ALLROUNDER') return 'All-Rounder';
+    return role;
+  }
 
   return (
     <div className="contest-details">
       <h2 className="contest-title">{contest.name}</h2>
       <p className="contest-passkey"><strong>Passkey:</strong> {contest.passkey}</p>
-      <p className="contest-owner"><strong>Owner:</strong> {contest.owner?.name}</p>
+      <p className="contest-owner"><strong>Owner:</strong> {contest.contest_owner?.name}</p>
+
+      {(selectedTeam || published) && (
+        <>
+          <h3>Contest Standings</h3>
+          <table className="user-teams-table">
+            <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team Name</th>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>Current Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allTeams.sort((a, b) => b.current_score - a.current_score).map((team, index) => (
+            <tr key={team.id} style={{ backgroundColor: team.id === selectedTeam?.id ? 'lightblue' : 'transparent' }}>
+              <td>{index + 1}</td>
+              <td>{team.name}</td>
+              <td>{team.owner.name}</td>
+              <td>{team.owner.email}</td>
+              <td>{team.points}</td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+        </>
+      )}
 
       <div className="your-team-section">
-        <h3>Your Team</h3>
+        <h3>Your Participation</h3>
         {selectedTeam || published ? (
           <div className="team-details">
-            <h4>Selected Team: {selectedTeam.name}</h4>
-            <p><strong>Credits:</strong> {selectedTeam.credits}</p>
-            <h5>Players:</h5>
-            <ul>
-              {selectedTeam.players.map(player => (
-                <li key={player.id}>{player.name} - {player.credits} credits</li>
-              ))}
-            </ul>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <Card variant="outlined">
+                  <CardContent>
+                    {selectedTeam ? (
+                      <div>
+                        <Typography variant="h6">{selectedTeam.name} </Typography>
+                        <table className="players-table">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Role</th>
+                              <th>Nationality</th>
+                              <th>Credits</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selectedTeam.players.map(player => (
+                              <tr key={player.id}>
+                                <td>
+                                  {player.name} 
+                                  {player.id === captain?.id && <span className="captain-tag"> (Captain)</span>}
+                                  {player.id === viceCaptain?.id && <span className="vice-captain-tag"> (Vice Captain)</span>}
+                                </td>
+                                <td>{getRoleString(player.role)}</td>
+                                <td>{player.indian ? 'Indian' : 'Overseas'}</td>
+                                <td>{player.credits}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <Typography>No team selected.</Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <table className="selections-table">
+                      <tbody>
+                        <tr>
+                          <td><strong>Orange Cap Player</strong></td>
+                          <td>{orangeCapPlayer ? orangeCapPlayer.name : 'None'}</td>
+                          <td>{orangeCapPlayer ? orangeCapPlayer.team_short_name : 'None'}</td>
+                          <td>{orangeCapPlayer ? getRoleString(orangeCapPlayer.role) : 'None'}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Purple Cap Player</strong></td>
+                          <td>{purpleCapPlayer ? purpleCapPlayer.name : 'None'}</td>
+                          <td>{purpleCapPlayer ? purpleCapPlayer.team_short_name : 'None'}</td>
+                          <td>{purpleCapPlayer ? getRoleString(purpleCapPlayer.role) : 'None'}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Player of the Tournament</strong></td>
+                          <td>{playerOfTheTournament ? playerOfTheTournament.name : 'None'}</td>
+                          <td>{playerOfTheTournament ? playerOfTheTournament.team_short_name : 'None'}</td>
+                          <td>{playerOfTheTournament ? getRoleString(playerOfTheTournament.role) : 'None'}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Top Teams</strong></td>
+                          <td>{topTeams.length > 0 ? topTeams.map(team => team.short_name).join(', ') : 'None'}</td>
+                          <td> </td>
+                          <td> </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
           </div>
         ) : (
           <div className="team-selection">
@@ -216,28 +323,6 @@ const ContestDetails = () => {
           </div>
         )}
       </div>
-
-      <h3>Contest Standings</h3>
-      <table className="user-teams-table">
-        <thead>
-          <tr>
-            <th>Team Name</th>
-            <th>User Name</th>
-            <th>User Email</th>
-            <th>Current points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allTeams.sort((a, b) => b.current_score - a.current_score).map(team => (
-            <tr key={team.id}>
-              <td>{team.name}</td>
-              <td>{team.owner.name}</td>
-              <td>{team.owner.email}</td>
-              <td>{team.points}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };
