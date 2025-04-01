@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   protect_from_forgery with: :null_session
 
+  skip_before_action :require_login, only: [:frontend]
+
   def frontend
-    render file: 'public/index.html'
+    render file: 'public/index.html', layout: false
   end
 
   private
