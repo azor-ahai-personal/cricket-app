@@ -19,8 +19,11 @@ Rails.application.routes.draw do
       resources :players, only: [:index]
       resources :contests, only: [:index, :create, :update, :destroy, :show] do
         put 'join', on: :collection
+        put 'participate', on: :member
       end
-      resources :fantasy_teams, only: [:index, :create, :update, :destroy, :show]
+      resources :fantasy_teams, only: [:index, :create, :update, :destroy, :show] do
+        put 'publish', on: :member
+      end
       resource :bootstraps, only: [:show] do
         get 'additional_bootstrapped', on: :collection
       end

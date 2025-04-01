@@ -15,6 +15,9 @@ export const apiService = {
   // Auth endpoints
   signup: (data) => api.post('/signup', data),
   login: (data) => api.post('/login', data),
+
+  getBootstrapData: (data) => api.get('/bootstraps/additional_bootstrapped', data),
+
   logout: () => api.delete('/logout'),
 
   // Players endpoints
@@ -26,16 +29,14 @@ export const apiService = {
   createContest: (data) => api.post('/contests', data),
   updateContest: (id, data) => api.put(`/contests/${id}`, data),
   joinContest: (data) => api.put('/contests/join', data),
+  participateInContest: (id, data) => api.put(`/contests/${id}/participate`, data),
 
   // Teams endpoints
   createTeam: (data) => api.post('/fantasy_teams', data),
-  getTeams: () => api.get('/fantasy_teams'),
+  getTeams: (data) => api.get('/fantasy_teams', {params: data}),
   getTeam: (id) => api.get(`/fantasy_teams/${id}`),
   updateTeam: (id, data) => api.put(`/fantasy_teams/${id}`, data),
   publishTeam: (id) => api.put(`/fantasy_teams/${id}/publish`),
-
-
-  getBootstrapData: (data) => api.get('/bootstraps/additional_bootstrapped', data),
 };
 
 // Error handler

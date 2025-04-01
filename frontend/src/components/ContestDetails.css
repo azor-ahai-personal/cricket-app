@@ -1,0 +1,101 @@
+/* frontend/src/components/ContestDetails.css */
+
+.contest-details {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contest-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contest-passkey,
+.contest-owner {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.your-team-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.team-selection {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.user-teams-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-teams-table th,
+.user-teams-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.user-teams-table th {
+  background-color: #f2f2f2;
+}
+
+.team-details {
+  margin-top: 10px;
+}
+
+.team-details h4 {
+  margin: 10px 0;
+}
+
+.team-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-details li {
+  margin: 5px 0;
+}
+
+.participate-button {
+  margin-bottom: 10px;
+}
+
+/* frontend/src/components/ContestDetails.css */
+
+.selected-top-teams {
+  display: flex;
+  flex-wrap: wrap; /* Allow chips to wrap to the next line */
+  gap: 8px; /* Space between chips */
+  margin-bottom: 10px; /* Space below the chips */
+}
+
+.chip {
+  height: 24px; /* Adjust height */
+  font-size: 0.8rem; /* Adjust font size */
+  padding: 4px 8px; /* Adjust padding */
+}
+
+
+.MuiFormControl-root {
+  margin-bottom: 16px; /* Space below each select */
+}
+
+.MuiSelect-root {
+  min-width: 200px; /* Set a minimum width for all selects */
+}
+
+.form-control {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 16px; /* Space below each select */
+}

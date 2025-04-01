@@ -3,7 +3,11 @@ module Api
     class FantasyTeamsController < ApplicationController
 
       def index
-        @fantasy_teams = current_user.fantasy_teams
+        if params[:published]
+          @fantasy_teams = current_user.fantasy_teams.where(published: true)
+        else
+          @fantasy_teams = current_user.fantasy_teams
+        end
         render 'api/v1/fantasy_teams/index', formats: [:json]
       end
 

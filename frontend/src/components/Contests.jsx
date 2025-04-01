@@ -101,6 +101,7 @@ const Contests = () => {
     return <div>{error}</div>;
   }
 
+  console.log({contests});
   return (
     <div className="contests-container-contests">
       {/* Popup */}
@@ -209,7 +210,7 @@ const Contests = () => {
               <td onClick={() => handleRowClick(contest.id)}>{contest.name}</td>
               <td onClick={() => handleRowClick(contest.id)}>{contest.passkey}</td>
               <td onClick={() => handleRowClick(contest.id)}>
-                <UserAvatar name={contest.owner.name} />
+                <UserAvatar name={contest.contest_owner.name} />
               </td>
               <td onClick={() => handleRowClick(contest.id)}>{contest.active ? "Yes" : "No"}</td>
               <td onClick={() => handleRowClick(contest.id)}>{contest.total_teams}</td>

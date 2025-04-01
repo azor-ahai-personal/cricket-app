@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Dialog,
   DialogTitle,
@@ -8,34 +8,30 @@ import {
   Box,
   Paper
 } from '@mui/material';
+
 import CloseIcon from '@mui/icons-material/Close';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 import './Players.css';
-import apiService from '../utils/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPlayers } from '../store/playersSlice';
 
 const Players = () => {
   const navigate = useNavigate();
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
+  const teams = useSelector((state) => state.players.teams);
+  const loading = useSelector((state) => state.players.loading);
+  const error = useSelector((state) => state.players.error);
+
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
-    const fetchPlayers = async () => {
-      try {
-        const data = await apiService.getPlayers();
-        setTeams(data.teams);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchPlayers();
-  }, []);
+    if (!teams || teams.length === 0) {
+      dispatch(fetchPlayers());
+    }
+  }, [dispatch, teams]);
 
   const handleOpenDialog = (team) => {
     setSelectedTeam(team);

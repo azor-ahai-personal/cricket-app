@@ -10,7 +10,7 @@ module Api
             end
 
             def show
-                @contest = Contest.find(params[:id])
+                @contest = Contest.includes(participations: :fantasy_team).find(params[:id])
                 render 'api/v1/contests/show', formats: [:json]
             end
 
@@ -57,6 +57,48 @@ module Api
                 render json: { message: "Joined contest successfully" }, status: :ok
             end
 
+            def participate
+                @contest = Contest.find(params[:id])
+                if @contest.nil?
+                    render json: { error: "Contest not found" }, status: :not_found
+                    return
+                end
+
+                user_validation = validate_user_participation(params[:user_id], params[:fantasy_team_id])
+                unless user_validation[:valid]
+                    render json: { error: user_validation[:error] }, status: :unprocessable_entity
+                    return
+                end
+
+                team_validation = validate_top_teams(params[:top_teams])
+                unless team_validation[:valid]
+                    render json: { error: team_validation[:error] }, status: :unprocessable_entity
+                    return
+                end
+
+                player_validation = validate_players([params[:orange_cap_player_id], params[:purple_cap_player_id], params[:player_of_the_tournament_id]])
+                unless player_validation[:valid]
+                    render json: { error: player_validation[:error] }, status: :unprocessable_entity
+                    return
+                end
+
+                participations = Participation.new(
+                    user_id: params[:user_id], 
+                    fantasy_team_id: params[:fantasy_team_id], 
+                    contest_id: @contest.id,
+                    orange_cap_player_id: params[:orange_cap_player_id],
+                    purple_cap_player_id: params[:purple_cap_player_id],
+                    player_of_the_tournament_id: params[:player_of_the_tournament_id],
+                    top_teams: params[:top_teams],
+                )
+
+                if participations.save
+                    render json: { message: "Participated in contest successfully" }, status: :ok
+                else
+                    render json: { errors: participations.errors.full_messages }, status: :unprocessable_entity
+                end
+            end
+
             private
 
             def generate_unique_passkey
@@ -82,6 +124,43 @@ module Api
             def update_params
                 params.require(:contest).permit(:active)
             end
+
+            def validate_user_participation(user_id, fantasy_team_id)
+                return { valid: false, error: "User ID and Fantasy Team ID are required" } if user_id.nil? || fantasy_team_id.nil?
+
+                user = User.find(user_id)
+                fantasy_team = FantasyTeam.find(fantasy_team_id)
+
+                return { valid: false, error: "User or Fantasy Team not found" } if user.nil? || fantasy_team.nil?
+                return { valid: false, error: "You are not authorized to participate in this contest because you are not the owner of the team" } if user.id != @current_user.id
+                return { valid: false, error: "You are not authorized to participate in this contest because you are not the owner of the team" } if fantasy_team.user_id != @current_user.id
+                return { valid: false, error: "You are not authorized to participate in this contest because the team is not published" } if fantasy_team.published == false
+                return { valid: false, error: "You are not authorized to participate in this contest because you are already in the contest" } if @contest.participations.where(user_id: user_id, fantasy_team_id: fantasy_team_id).exists?
+
+                { valid: true }
+            end
+
+            def validate_top_teams(top_teams)
+
+                return { valid: false, error: "You must select exactly 4 teams" } if top_teams.length != 4
+
+                teams = IplTeam.where(:id.in => top_teams)
+                return { valid: false, error: "You must select exactly 4 teams" } if teams.length != 4
+
+                { valid: true }
+            end
+
+            def validate_players(player_ids)
+                return { valid: false, error: "Orange Cap, Purple Cap, and Player of the Tournament are required" } if player_ids.nil? || player_ids.length != 3
+
+                unique_players = player_ids.uniq
+                
+                players = Player.where(:id.in => unique_players)
+                return { valid: false, error: "Wrong player IDs provided" } if players.length != unique_players.length
+
+                { valid: true }
+            end
+            
         end
     end
 end

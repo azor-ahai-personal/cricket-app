@@ -10,9 +10,9 @@ export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async () =>
 const playersSlice = createSlice({
   name: 'players',
   initialState: {
+    teams: [],
     loading: false,
     error: null,
-    teams: [], // Initialize teams as an empty array
   },
   reducers: {},
   extraReducers: (builder) => {
