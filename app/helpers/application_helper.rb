@@ -1,12 +1,16 @@
 module ApplicationHelper
     def current_user
-        user_id = decoded_token['user_id'].to_s
+        decoded = decoded_token
+        return nil if decoded.nil? # Return nil if the token is invalid
+
+        user_id = decoded['user_id'].to_s
         @current_user ||= User.find_by(id: user_id)
     end
 
     def require_login
         unless signed_in?
             render json: { error: 'Unauthorized' }, status: :unauthorized
+            return # Ensure to exit after rendering
         end
     end
 
@@ -23,6 +27,13 @@ module ApplicationHelper
     end
 
     def decoded_token
-        JWT.decode(access_token, Rails.application.credentials.secret_key_base)[0]
+        token = access_token
+        return nil if token.nil? # Return nil if there's no token
+
+        begin
+            JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
+        rescue JWT::DecodeError
+            nil # Return nil if decoding fails
+        end
     end
 end
