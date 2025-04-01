@@ -8,6 +8,11 @@ class Participation
 
     field :points, type: Integer, default: 0
     field :rank, type: Integer, default: 0
+    field :orange_cap_player_id, type: String, default: nil
+    field :purple_cap_player_id, type: String, default: nil
+    field :player_of_the_tournament_id, type: String, default: nil
+    
+    field :top_teams, type: Array, default: []
 
     validates :user_id, uniqueness: { scope: :contest_id }
 end
