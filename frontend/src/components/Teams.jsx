@@ -63,7 +63,7 @@ const Teams = () => {
         >
           Home
         </button>
-        <h2>My Teams</h2>
+        <h2>My fantasy teams</h2>
         <button
           className="action-button-teams"
           onClick={() => setIsDialogOpen(true)} // Open the dialog

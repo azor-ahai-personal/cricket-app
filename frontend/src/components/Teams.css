@@ -7,32 +7,52 @@
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+  justify-content: space-between; 
 }
 
 .home-button-teams {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+}
+
+.action-button-teams {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
 }
 
 .home-button-teams:hover {
   background-color: #0056b3;
 }
 
+.action-button-teams:hover {
+  background-color: #218838;
+}
+
 .teams-table-teams {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border: 1px solid #00060d;
 }
 
 .teams-table-teams th, .teams-table-teams td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  border: 1px solid #00060b;
 }
 
 .teams-table-teams th {
@@ -41,11 +61,20 @@
   color: #333;
 }
 
+/* Alternating row colors */
+.teams-table-teams tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.teams-table-teams tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
 .team-row-teams {
-  transition: background-color 0.3s; /* Smooth transition for background color */
+  transition: background-color 0.3s;
   cursor: pointer;
 }
 
 .team-row-teams:hover {
-  background-color: #f1f1f1; /* Light gray on hover */
+  background-color: #e0e0e0;
 }
