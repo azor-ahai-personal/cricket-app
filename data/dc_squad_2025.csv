@@ -1,24 +1,24 @@
 Name,Team,Role,Indian,Credits
-KL Rahul,DC,batter,True,105
-Faf du Plessis,DC,batter,False,95
-Harry Brook,DC,batter,False,90
-Tristan Stubbs,DC,batter,False,85
-Jake Fraser-McGurk,DC,batter,False,80
-Karun Nair,DC,batter,True,75
-Abishek Porel,DC,batter,True,65
-Sameer Rizvi,DC,batter,True,65
-Axar Patel,DC,allrounder,True,95
-Donovan Ferreira,DC,allrounder,False,80
-Ashutosh Sharma,DC,allrounder,True,70
-Ajay Mandal,DC,allrounder,True,65
-Manvanth Kumar,DC,allrounder,True,60
-Madhav Tiwari,DC,allrounder,True,60
-Mitchell Starc,DC,bowler,False,110
-Kuldeep Yadav,DC,bowler,True,90
-T Natarajan,DC,bowler,True,85
-Mohit Sharma,DC,bowler,True,85
-Mukesh Kumar,DC,bowler,True,80
-Dushmantha Chameera,DC,bowler,False,80
-Darshan Nalkande,DC,bowler,True,70
-Vipraj Nigam,DC,bowler,True,65
-Tripurana Vijay,DC,bowler,True,65
+KL Rahul,DC,batter,TRUE,100
+Faf du Plessis,DC,batter,FALSE,95
+Harry Brook,DC,batter,FALSE,90
+Tristan Stubbs,DC,batter,FALSE,90
+Jake Fraser-McGurk,DC,batter,FALSE,90
+Karun Nair,DC,batter,TRUE,75
+Abishek Porel,DC,batter,TRUE,75
+Sameer Rizvi,DC,batter,TRUE,70
+Axar Patel,DC,allrounder,TRUE,95
+Donovan Ferreira,DC,allrounder,FALSE,80
+Ashutosh Sharma,DC,allrounder,TRUE,70
+Ajay Mandal,DC,allrounder,TRUE,65
+Manvanth Kumar,DC,allrounder,TRUE,65
+Madhav Tiwari,DC,allrounder,TRUE,65
+Mitchell Starc,DC,bowler,FALSE,100
+Kuldeep Yadav,DC,bowler,TRUE,95
+T Natarajan,DC,bowler,TRUE,90
+Mohit Sharma,DC,bowler,TRUE,85
+Mukesh Kumar,DC,bowler,TRUE,85
+Dushmantha Chameera,DC,bowler,FALSE,80
+Darshan Nalkande,DC,bowler,TRUE,70
+Vipraj Nigam,DC,bowler,TRUE,65
+Tripurana Vijay,DC,bowler,TRUE,65

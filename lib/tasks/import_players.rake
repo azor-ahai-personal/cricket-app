@@ -9,6 +9,8 @@ namespace :import do
     
     # Get all CSV files from data directory
     csv_files = Dir[Rails.root.join('data', '*_squad_2025.csv')]
+
+    puts csv_files
     
     csv_files.each do |file|
       team_code = File.basename(file, '_squad_2025.csv').upcase
@@ -26,7 +28,7 @@ namespace :import do
           name: row['Name'],
           team: team,
           role: row['Role']&.upcase,
-          indian: row['Indian'] == 'True',
+          indian: row['Indian'].downcase == 'true',
           credits: row['Credits']
         )
         puts "Created player: #{player.name} (#{player.role})"
@@ -46,6 +48,9 @@ namespace :import do
     puts "\nPlayers by role:"
     roles = Player.all.group_by(&:role)
     roles.each do |role, players|
+      if players.count == 1
+        puts "Error: Only one player found for role #{role}, #{players}"
+      end 
       puts "#{role}: #{players.count} players"
     end
   end

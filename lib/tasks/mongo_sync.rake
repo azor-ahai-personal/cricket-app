@@ -33,3 +33,9 @@ end
 
 # Command to restore production database from local backup
 # mongorestore --uri="mongodb+srv://cation-alpha:cation-alpha-password@cluster0.iggkx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" --db cricket_app_production ./mongo_backup/cricket_app_development
+
+# Command to store local players collection to json
+# mongoexport --uri="mongodb://localhost:27017/cricket_app_development" --collection=players --out=players_backup.json
+
+# Command to sync production database with players collection from local backup
+# mongoimport --uri="mongodb+srv://cation-alpha:cation-alpha-password@cluster0.iggkx.mongodb.net/cricket_app_production?retryWrites=true&w=majority&appName=Cluster0" --collection=players --file=players_backup.json --mode=upsert

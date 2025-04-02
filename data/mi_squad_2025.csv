@@ -1,26 +1,26 @@
-Name,Team,Role,Indian
-Suryakumar Yadav,MI,batter,True
-Bevon Jacobs,MI,batter,False
-Robin Minz,MI,Unknown,True
-Naman Dhir,MI,batter,True
-Ryan Rickelton,MI,batter,False
-Rohit Sharma,MI,batter,True
-Krishnan Shrijith,MI,batter,True
-Raj Bawa,MI,allrounder,True
-Corbin Bosch,MI,allrounder,False
-Will Jacks,MI,allrounder,False
-Hardik Pandya,MI,allrounder,True
-Mitchell Santner,MI,allrounder,False
-Tilak Varma,MI,allrounder,True
-Ashwani Kumar,MI,bowler,True
-Trent Boult,MI,bowler,False
-Jasprit Bumrah,MI,bowler,True
-Deepak Chahar,MI,bowler,True
-Mujeeb Ur Rahman,MI,bowler,False
-Vignesh Puthur,MI,bowler,True
-Satyanarayana Raju,MI,bowler,True
-Karn Sharma,MI,bowler,True
-Arjun Tendulkar,MI,bowler,True
-Reece Topley,MI,bowler,False
-AM Ghazanfar,MI,bowler,False
-Lizaad Williams,MI,bowler,False
+Name,Team,Role,Indian,Credits
+Suryakumar Yadav,MI,batter,TRUE,100
+Bevon Jacobs,MI,batter,FALSE,70
+Robin Minz,MI,batter,TRUE,70
+Naman Dhir,MI,batter,TRUE,85
+Ryan Rickelton,MI,batter,FALSE,90
+Rohit Sharma,MI,batter,TRUE,100
+Krishnan Shrijith,MI,batter,TRUE,65
+Raj Bawa,MI,allrounder,TRUE,65
+Corbin Bosch,MI,allrounder,FALSE,65
+Will Jacks,MI,allrounder,FALSE,90
+Hardik Pandya,MI,allrounder,TRUE,100
+Mitchell Santner,MI,allrounder,FALSE,90
+Tilak Varma,MI,allrounder,TRUE,100
+Ashwani Kumar,MI,bowler,TRUE,65
+Trent Boult,MI,bowler,FALSE,95
+Jasprit Bumrah,MI,bowler,TRUE,105
+Deepak Chahar,MI,bowler,TRUE,90
+Mujeeb Ur Rahman,MI,bowler,FALSE,90
+Vignesh Puthur,MI,bowler,TRUE,65
+Satyanarayana Raju,MI,bowler,TRUE,65
+Karn Sharma,MI,bowler,TRUE,75
+Arjun Tendulkar,MI,bowler,TRUE,75
+Reece Topley,MI,bowler,FALSE,85
+AM Ghazanfar,MI,bowler,FALSE,65
+Lizaad Williams,MI,bowler,FALSE,75

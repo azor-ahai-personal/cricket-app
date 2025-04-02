@@ -2,7 +2,7 @@ class FantasyTeam
     include Mongoid::Document
     include Mongoid::Timestamps
 
-    BUDGET = 1100
+    BUDGET = 975
     MAX_PLAYERS = 11
     MIN_BATTERS = 3
     MIN_BOWLERS = 3
