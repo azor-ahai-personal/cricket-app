@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { uniq } from 'lodash';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import apiService from '../utils/api';
 import { fetchPlayers } from '../store/playersSlice'; // Import the fetchPlayers action and selector
@@ -8,6 +8,8 @@ import { getPlayerDetailsByIds } from '../utils/playerUtils'; // Import the util
 import './TeamDetails.css'; // Add styles for the team details page
 import { MAX_PLAYERS, TEAM_CREDIT } from '../constants'; // Import constants
 import PlayerSelectionDialog from './PlayerSelectionDialog'; // Import the dialog component
+import { toast, ToastContainer } from 'react-toastify';
+import './ToastStyles.css'; // Import the toast styles
 
 const TeamDetails = () => {
   const { id: teamId } = useParams();
@@ -15,6 +17,7 @@ const TeamDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const players = useSelector((state) => state.players.players); // Access players
   const [playerDetails, setPlayerDetails] = useState([]); // State to hold player details
@@ -24,7 +27,7 @@ const TeamDetails = () => {
   const [viceCaptainId, setViceCaptainId] = useState(null);
   const [openDropdownId, setOpenDropdownId] = useState(null); // Track which dropdown is open
   const [isPublished, setIsPublished] = useState(false);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false); // State for confirmation dialog
+  // const [showConfirmDialog, setShowConfirmDialog] = useState(false); // State for confirmation dialog
 
   const fetchTeamDetails = async () => {
     try {
@@ -105,34 +108,50 @@ const TeamDetails = () => {
   };
 
   const handleSave = async () => {
-    // Make the backend call to update the IPL team
-    const updatedPlayers = playerDetails.map(player => player.id); // Get the updated player IDs
-    await apiService.updateTeam(
-      teamId, { 
-        players: updatedPlayers, 
-        captain_id: captainId, 
-        vice_captain_id: viceCaptainId
-      }
-    );
-    setIsModified(false); // Reset modified state
+    try {
+      // Make the backend call to update the IPL team
+      const updatedPlayers = playerDetails.map(player => player.id); // Get the updated player IDs
+      await apiService.updateTeam(
+        teamId, { 
+          players: updatedPlayers, 
+          captain_id: captainId, 
+          vice_captain_id: viceCaptainId
+        }
+      );
+      setIsModified(false); // Reset modified state
+
+      // Show success toast
+      toast.success("Information saved successfully!");
+    } catch (error) {
+      // Handle error (optional)
+      toast.error("Failed to save information. Please try again.");
+    }
   };
 
   const toggleDropdown = (playerId) => {
     setOpenDropdownId(openDropdownId === playerId ? null : playerId);
   };
 
+  const publishData = async () => {
+    console.log('Coming here');
+    try{
+      await apiService.publishTeam(teamId);
+      setIsModified(false);
+      toast.success("Team published successfully!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000); 
+    } catch (error) {
+      toast.error("Could not publish team");
+    }
+  };
+
   const handlePublish = () => {
-    setShowConfirmDialog(true); // Show confirmation dialog
-  };
-
-  const confirmPublish = async () => {
-    await apiService.publishTeam(teamId);
-    setIsModified(false); // Reset modified state
-    setShowConfirmDialog(false); // Close confirmation dialog
-  };
-
-  const cancelPublish = () => {
-    setShowConfirmDialog(false); // Close confirmation dialog
+    const confirmPublish = window.confirm("Once published, you can't make changes to your team. Do you still want to publish?");
+    if (confirmPublish){
+      publishData();
+    }
+    return;
   };
 
   // Function to check if the publish button should be enabled
@@ -141,25 +160,8 @@ const TeamDetails = () => {
     const isCreditsValid = usedCredits <= TEAM_CREDIT;
     const isCaptainSelected = captainId !== null;
     const isViceCaptainSelected = viceCaptainId !== null;
-    
-    // Count batters and bowlers
-    // const battersCount = playerDetails.filter(player => player.role.toLowerCase() === 'batter').length;
-    // const bowlersCount = playerDetails.filter(player => player.role.toLowerCase() === 'bowler').length;
-    // const isRolesValid = battersCount >= 3 && bowlersCount >= 3;
-
     return selectedPlayersCount === MAX_PLAYERS && isCreditsValid && isCaptainSelected && isViceCaptainSelected;
   };
-
-  // Confirmation Dialog Component
-  const ConfirmationDialog = ({ onCancel, onConfirm }) => (
-    <div className="overlay-team-details">
-      <div className="confirm-dialog-team-details">
-        <p>Once published, you can't make changes to your team. Do you still want to publish?</p>
-        <button onClick={onCancel}>Cancel</button>
-        <button onClick={onConfirm}>Yes</button>
-      </div>
-    </div>
-  );
 
   if (loading) {
     return <div>Loading...</div>;
@@ -169,6 +171,29 @@ const TeamDetails = () => {
     return <div>{error}</div>;
   }
 
+  const navigateToHome = () => {
+    if (isModified) {
+      const confirmNavigation = window.confirm("You have unsaved changes. If you navigate away, all changes will be lost. Do you want to continue?");
+      
+      if (!confirmNavigation) {
+          return; // Stop navigation if the user cancels
+      }
+    }
+    navigate('/');
+  }; 
+
+  const navigateBack = () => {
+    if (isModified) {
+      const confirmNavigation = window.confirm("You have unsaved changes. If you navigate away, all changes will be lost. Do you want to continue?");
+      
+      if (!confirmNavigation) {
+          return; // Stop navigation if the user cancels
+      }
+    }
+    navigate('/teams');
+  }; 
+
+
   return (
     <div className="team-details-container-team-details">
       {isPublished && (
@@ -176,15 +201,40 @@ const TeamDetails = () => {
           This team is published and no changes can be made to it.
         </div>
       )}
-      <h2>{team.name}</h2>
+      <div className="header-team-details">
+        <div className="home-back-button-team-details">
+        <button
+          className="home-button-team-details"
+          onClick={() => navigateToHome()} // Navigate to the home page
+        >
+          Home
+        </button>
+        <button
+          className="home-button-team-details"
+          onClick={() => navigateBack()} // Navigate to the home page
+        >
+          Back
+        </button>
+        </div>
+        <h2>{team.name}</h2>
+        <div className="save-publish-buttons-team-details">
+          <button 
+            className="save-button-team-details"
+            onClick={handleSave} 
+            disabled={!isModified || isPublished} // Disable if no changes or published
+          >
+          Save
+        </button>
+        <button 
+          onClick={handlePublish} 
+          disabled={!isPublishEnabled() || isPublished} // Disable if conditions are not met
+          className="publish-button-team-details"
+        >
+            Publish
+          </button>
+        </div>
+      </div>
       <h3>Team Information</h3>
-      <button 
-        onClick={handlePublish} 
-        disabled={!isPublishEnabled() || isPublished} // Disable if conditions are not met
-        className="publish-button-team-details"
-      >
-        Publish
-      </button>
       <div className="team-info-team-details">
         <div className="info-item-team-details">
           <strong>Total Credits:</strong> {TEAM_CREDIT}
@@ -199,8 +249,16 @@ const TeamDetails = () => {
           <strong>Remaining Credits:</strong> {remainingCredits}
         </div>
       </div>
-      <h3>Players</h3>
-      <button onClick={handleOpenDialog} disabled={isPublished}> Add a Player</button> {/* Button to open dialog */}
+      <div className="team-details-players-team-details">
+        <h3>Players</h3>
+        <button 
+          className="add-player-button-team-details"
+          onClick={handleOpenDialog} 
+          disabled={isPublished}
+        > 
+          Add players
+        </button> {/* Button to open dialog */}
+      </div>
       <table>
         <thead>
           <tr>
@@ -284,21 +342,15 @@ const TeamDetails = () => {
           alreadySelectedPlayers={playerDetails} // Pass the already selected players
         />
       )}
-      <button 
-        onClick={handleSave} 
-        disabled={!isModified || isPublished} // Disable if no changes or published
-        style={{ float: 'right' }} // Position the save button to the right
-      >
-        Save
-      </button>
-
-      {/* Confirmation Dialog */}
-      {showConfirmDialog && (
-        <ConfirmationDialog 
-          onCancel={cancelPublish} 
-          onConfirm={confirmPublish} 
-        />
-      )}
+      <ToastContainer 
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        pauseOnFocusLoss
+      />
     </div>
   );
 };

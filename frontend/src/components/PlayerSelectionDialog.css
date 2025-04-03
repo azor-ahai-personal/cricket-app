@@ -105,3 +105,15 @@ button:last-child {
     margin-top: 10px; /* Space above the error message */
     font-weight: bold; /* Bold text for emphasis */
 }
+
+.select-players-container-player-selection-dialog {
+    display: flex;
+    justify-content: space-between; /* Pushes elements to opposite ends */
+    align-items: center; /* Aligns items vertically */
+    padding: 10px;
+  }
+  
+  .button-group-player-selection-dialog {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+  }

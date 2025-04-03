@@ -35,7 +35,13 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
   return (
     <div className="dialog-overlay-player-selection-dialog">
       <div className="dialog-content-player-selection-dialog">
+      <div className="select-players-container-player-selection-dialog">
         <h3>Select Players</h3>
+        <div className="button-group-player-selection-dialog">
+          <button onClick={handleDone}>Done</button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
+      </div>
         <div className="selected-players-player-selection-dialog">
           {selectedPlayers.map(player => (
             <span 
@@ -103,8 +109,6 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
             </div>
           ))}
         </div>
-        <button onClick={handleDone}>Done</button>
-        <button onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

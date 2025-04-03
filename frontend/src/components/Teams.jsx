@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import apiService from '../utils/api';
 import './Teams.css'; // Add styles for the table
+import { toast, ToastContainer } from 'react-toastify';
+import './ToastStyles.css'; // Import the toast styles
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
@@ -32,13 +34,14 @@ const Teams = () => {
       setIsDialogOpen(false); // Close the dialog
       setTeamName(''); // Reset the form field
       await fetchTeams(); // Refresh the teams list
+      toast.success("Team created successfully!");
     } catch (err) {
       setError('Failed to create team');
+      toast.error("Failed to create team");
     }
   };
 
   const handleRowClick = (teamId) => {
-    console.log({teamId});
     navigate(`/teams/${teamId}`); // Navigate to the team details page
   };
 
@@ -120,6 +123,15 @@ const Teams = () => {
           ))}
         </tbody>
       </table>
+      <ToastContainer 
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        pauseOnFocusLoss
+      />
     </div>
   );
 };

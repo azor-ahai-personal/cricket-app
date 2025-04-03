@@ -5,6 +5,43 @@
   font-family: Arial, sans-serif; /* Set a default font */
 }
 
+.published-message-team-details {
+  background: #28a745; /* Success green color */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  width: 100vw; /* Full viewport width */
+  position: absolute; /* Ensures it stays at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Keeps it above other elements */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.header-team-details {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: space-between; 
+}
+
+.home-button-team-details {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+}
+
 h2 {
   margin-bottom: 10px; /* Space below the main heading */
 }
@@ -14,13 +51,13 @@ h3 {
   margin-bottom: 10px; /* Space below the subheading */
 }
 
-table-team-details {
+table {
   width: 100%; /* Full width of the container */
   border-collapse: collapse; /* Merge borders for a cleaner look */
   margin-top: 10px; /* Space above the table */
 }
 
-th-team-details, td-team-details {
+th, td {
   border: 1px solid #ddd; /* Light gray border for cells */
   padding: 8px; /* Padding inside cells */
   text-align: left; /* Align text to the left */
@@ -45,16 +82,24 @@ td {
 
 .publish-button-team-details {
   background-color: #007bff; /* Blue background color */
-  color: white; /* White text color */
-  border: none; /* Remove borders */
-  padding: 10px 20px; /* Padding inside the button */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  margin-bottom: 10px; /* Space below the button */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
 }
 
 .publish-button-team-details:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+.save-button-team-details:disabled,
+.publish-button-team-details:disabled,
+.add-player-button-team-details:disabled {
+  background-color: #6c757d; /* Gray background for disabled buttons */
+  cursor: not-allowed;
 }
 
 .publish-button-team-details:disabled {
@@ -84,7 +129,7 @@ td {
   display: inline-block;
 }
 
-.actions-button {
+.actions-button-team-details {
   background: none;
   border: none;
   cursor: pointer;
@@ -93,7 +138,11 @@ td {
   color: #333;
 }
 
-.dropdown-content {
+.actions-button-team-details:disabled{
+  background: none;
+}
+
+.dropdown-content-team-details {
   display: block;
   position: absolute;
   right: 0;
@@ -104,7 +153,7 @@ td {
   white-space: nowrap; /* Ensure text stays on one line */
 }
 
-.dropdown-content button {
+.dropdown-content-team-details button {
   display: block;
   width: 100%;
   padding: 8px 16px;
@@ -115,7 +164,7 @@ td {
   color: #333;
 }
 
-.dropdown-content button:hover {
+.dropdown-content-team-details button:hover {
   background-color: #f1f1f1;
 }
 
@@ -172,3 +221,43 @@ button:disabled {
   border-radius: 5px; /* Rounded corners */
   margin-bottom: 15px; /* Space below the message */
 }
+
+.team-details-players-team-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-player-button-team-details {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px; 
+  cursor: pointer;
+  font-size: 14px;
+  width: 120px;
+  height: 40px;
+}
+
+.save-button-team-details {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+}
+
+.save-publish-buttons-team-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+

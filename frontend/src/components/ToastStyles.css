@@ -1,0 +1,57 @@
+/* ToastStyles.css */
+.Toastify__toast {
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding inside the toast */
+    font-size: 16px; /* Font size */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Softer shadow */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.Toastify__toast:hover {
+    opacity: 0.95; /* Slight fade effect on hover */
+    transform: scale(1.02); /* Subtle zoom */
+}
+
+.Toastify__toast--success {
+    background-color: #1e8ce6c9; /* Green background for success */
+    color: white; /* White text */
+}
+
+.Toastify__toast--error {
+    background-color: #dc3545; /* Red background for error */
+    color: white; /* White text */
+}
+
+.Toastify__toast--info {
+    background-color: #17a2b8; /* Blue background for info */
+    color: white; /* White text */
+}
+
+.Toastify__toast--warning {
+    background-color: #ffc107; /* Yellow background for warning */
+    color: black; /* Black text */
+}
+
+.Toastify__toast-body {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+}
+
+.Toastify__close-button {
+    color: white; /* Close button color */
+    margin-left: 10px; /* Space between text and close button */
+    background: transparent; /* Remove default background */
+    border: none; /* Remove border */
+    cursor: pointer; /* Show pointer cursor */
+    transition: opacity 0.2s ease-in-out;
+}
+
+.Toastify__close-button:hover {
+    opacity: 0; /* Subtle fade effect on hover */
+}
+
+/* Fixes unwanted blue outline on close button */
+.Toastify__close-button:focus {
+    outline: none;
+    box-shadow: none;
+}
