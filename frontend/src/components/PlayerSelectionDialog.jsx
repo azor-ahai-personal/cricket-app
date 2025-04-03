@@ -53,8 +53,16 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
             </span>
           ))}
         </div>
-        <div className="total-credits-player-selection-dialog">
-          <strong>Total Credits of Selected Players: </strong> {totalCredits}
+        <div className="player-stats-container">
+          <div className="stat-box">
+            <strong>Players Selected:</strong> {selectedPlayers.length}
+          </div>
+          <div className="stat-box">
+            <strong>Total Credits Used:</strong> {totalCredits}
+          </div>
+          <div className="stat-box">
+            <strong>Credits Remaining:</strong> {TEAM_CREDIT - totalCredits}
+          </div>
         </div>
         {selectedPlayers.length >= MAX_PLAYERS && (
           <div className="error-message-player-selection-dialog">11 players already selected. Please remove a player to add a new one.</div>
@@ -63,52 +71,61 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
           <div className="error-message-player-selection-dialog">Total credits exceed the limit of {TEAM_CREDIT}. Please adjust your selection.</div>
         )}
         <div className="player-dropdowns-player-selection-dialog">
-          {teams.map(team => (
-            <div key={team} className="team-dropdown-player-selection-dialog">
-              <label>{team}</label>
-              <select 
-                onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
-                disabled={playerSelectionDisabled}
-              >
-                <option value="">Select a player</option>
-                {players
-                  .filter(player => player.team_short_name === team) // Filter players by team
-                  .map(player => (
-                    <option 
-                      key={player.id} 
-                      value={player.id} 
-                      disabled={selectedPlayers.includes(player) || totalCredits + player.credits > TEAM_CREDIT} // Disable if already selected or exceeds credit
-                    >
-                      {player.name} - {player.role} - {player.credits}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          ))}
-          {/* Add dropdowns for player roles */}
-          {roles.map(role => (
-            <div key={role} className="role-dropdown-player-selection-dialog">
-              <label>{role}</label>
-              <select 
-                onChange={(e) => handleSelectPlayer(players.find(p => p.role.toUpperCase() === role))}
-                disabled={playerSelectionDisabled}
-              >
-                <option value="">Select a player</option>
-                {players
-                  .filter(player => player.role.toUpperCase() === role) // Normalize role comparison
-                  .map(player => (
-                    <option 
-                      key={player.id} 
-                      value={player.id} 
-                      disabled={selectedPlayers.includes(player)} // Disable if already selected
-                    >
-                      {player.name} - {player.team_short_name} - {player.credits}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          ))}
+          {/* Team selection section on the left */}
+          <div className="team-dropdowns-container">
+            {teams.map(team => (
+              <div key={team} className="team-dropdown-player-selection-dialog">
+                <label>{team}</label>
+                <select 
+                  value=""
+                  onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
+                  disabled={playerSelectionDisabled}
+                >
+                  <option value="">Select a player</option>
+                  {players
+                    .filter(player => player.team_short_name === team)
+                    .map(player => (
+                      <option 
+                        key={player.id} 
+                        value={player.id} 
+                        disabled={selectedPlayers.includes(player) || totalCredits + player.credits > TEAM_CREDIT}
+                      >
+                        {player.name} - {player.role} - {player.credits}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          {/* Role selection section on the right */}
+          <div className="role-dropdowns-container">
+            {roles.map(role => (
+              <div key={role} className="role-dropdown-player-selection-dialog">
+                <label>{role}</label>
+                <select 
+                  value=""
+                  onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
+                  disabled={playerSelectionDisabled}
+                >
+                  <option value="">Select a player</option>
+                  {players
+                    .filter(player => player.role.toUpperCase() === role)
+                    .map(player => (
+                      <option 
+                        key={player.id} 
+                        value={player.id} 
+                        disabled={selectedPlayers.includes(player)}
+                      >
+                        {player.name} - {player.team_short_name} - {player.credits}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
     </div>
   );
