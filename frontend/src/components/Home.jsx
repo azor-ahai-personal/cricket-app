@@ -26,9 +26,9 @@ const Home = () => {
         <button className="action-button-home" onClick={handleViewPlayers}>
           View Players
         </button>
-        <button className="action-button-home" onClick={handleViewContests}>
+        {/* <button className="action-button-home" onClick={handleViewContests}>
           Contests
-        </button>
+        </button> */}
       </div>
     </div>
   );
