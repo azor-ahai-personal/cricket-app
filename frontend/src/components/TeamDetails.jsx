@@ -202,7 +202,7 @@ const TeamDetails = () => {
         </div>
       )}
       <div className="header-team-details">
-        <div className="home-back-button-team-details">
+        <div className="save-publish-buttons-team-details">
         <button
           className="home-button-team-details"
           onClick={() => navigateToHome()} // Navigate to the home page

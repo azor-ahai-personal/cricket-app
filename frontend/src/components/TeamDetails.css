@@ -254,6 +254,7 @@ button:disabled {
 
 .save-publish-buttons-team-details {
   display: flex;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
 }

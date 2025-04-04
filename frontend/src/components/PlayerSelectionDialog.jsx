@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './PlayerSelectionDialog.css'; // Add styles for the dialog
-import { MAX_PLAYERS, TEAM_CREDIT } from '../constants'; // Import constants
+import { MAX_PLAYERS, TEAM_CREDIT, MAX_OVERSEAS_PLAYERS} from '../constants'; // Import constants
+import Select from 'react-select';
 
 const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelectedPlayers }) => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const teams = [...new Set(players.map(player => player.team_short_name))]; // Get unique team names
-  const roles = ['BATTER', 'BOWLER', 'ALLROUNDER']; // Define normalized player roles
+  const roles = ['BATTER']; // Define normalized player roles
 
   // Initialize selected players with already selected players
   useEffect(() => {
@@ -29,8 +30,20 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
 
   // Calculate total credits of selected players
   const totalCredits = selectedPlayers.reduce((total, player) => total + player.credits, 0);
+  const overseasPlayersCount = selectedPlayers.filter(player => !player.indian).length
+  console.log({overseasPlayersCount});
 
   const playerSelectionDisabled = selectedPlayers.length >= MAX_PLAYERS || totalCredits >= TEAM_CREDIT;
+
+  const isPlayerDisabled = (player) => {
+    const isPlayerOverseas = !player.indian; 
+    return (
+        selectedPlayers.includes(player) || 
+        totalCredits + player.credits > TEAM_CREDIT || 
+        (isPlayerOverseas && overseasPlayersCount >= MAX_OVERSEAS_PLAYERS)
+    );
+  };
+
 
   return (
     <div className="dialog-overlay-player-selection-dialog">
@@ -72,38 +85,40 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
         )}
         <div className="player-dropdowns-player-selection-dialog">
           {/* Team selection section on the left */}
-          <div className="team-dropdowns-container">
+          {/* <div className="team-dropdowns-container">
             {teams.map(team => (
               <div key={team} className="team-dropdown-player-selection-dialog">
                 <label>{team}</label>
-                <select 
-                  value=""
-                  onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
-                  disabled={playerSelectionDisabled}
-                >
-                  <option value="">Select a player</option>
-                  {players
+                <Select
+                  value=''
+                  placeholder="Search & select a player"
+                  options={players
                     .filter(player => player.team_short_name === team)
-                    .map(player => (
-                      <option 
-                        key={player.id} 
-                        value={player.id} 
-                        disabled={selectedPlayers.includes(player) || totalCredits + player.credits > TEAM_CREDIT}
-                      >
-                        {player.name} - {player.role} - {player.credits}
-                      </option>
-                    ))}
-                </select>
+                    .map(player => ({
+                      value: player.id,
+                      label: `${player.name} - ${player.role} - ${player.credits}`,
+                      isDisabled: selectedPlayers.includes(player) || totalCredits + player.credits > TEAM_CREDIT,
+                    }))
+                  }
+                  isSearchable
+                  isDisabled={playerSelectionDisabled}
+                  onChange={(selectedOption) => {
+                    const selectedPlayer = players.find(p => p.id === selectedOption.value);
+                    if (selectedPlayer) {
+                      handleSelectPlayer(selectedPlayer);
+                    }
+                  }}
+                />
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Role selection section on the right */}
           <div className="role-dropdowns-container">
             {roles.map(role => (
               <div key={role} className="role-dropdown-player-selection-dialog">
                 <label>{role}</label>
-                <select 
+                {/* <select 
                   value=""
                   onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
                   disabled={playerSelectionDisabled}
@@ -120,7 +135,27 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
                         {player.name} - {player.team_short_name} - {player.credits}
                       </option>
                     ))}
-                </select>
+                </select> */}
+                <Select
+                  placeholder="Select a player"
+                  value=''
+                  options={players
+                    .filter(player => player.role.toUpperCase() === role)
+                    .map(player => ({
+                      value: player.id,
+                      label: `${player.name} - ${player.team_short_name} - ${player.credits}`,
+                      isDisabled: isPlayerDisabled(player),
+                    }))
+                  }
+                  isSearchable
+                  isDisabled={playerSelectionDisabled}
+                  onChange={(selectedOption) => {
+                    const selectedPlayer = players.find(p => p.id === selectedOption.value);
+                    if (selectedPlayer) {
+                      handleSelectPlayer(selectedPlayer);
+                    }
+                  }}
+                />
               </div>
             ))}
           </div>
