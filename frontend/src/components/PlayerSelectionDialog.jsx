@@ -6,7 +6,7 @@ import Select from 'react-select';
 const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelectedPlayers }) => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const teams = [...new Set(players.map(player => player.team_short_name))]; // Get unique team names
-  const roles = ['BATTER']; // Define normalized player roles
+  const roles = ['BATTER', 'BOWLER', 'ALLROUNDER']; // Define normalized player roles
 
   // Initialize selected players with already selected players
   useEffect(() => {
@@ -31,7 +31,6 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
   // Calculate total credits of selected players
   const totalCredits = selectedPlayers.reduce((total, player) => total + player.credits, 0);
   const overseasPlayersCount = selectedPlayers.filter(player => !player.indian).length
-  console.log({overseasPlayersCount});
 
   const playerSelectionDisabled = selectedPlayers.length >= MAX_PLAYERS || totalCredits >= TEAM_CREDIT;
 
@@ -48,13 +47,13 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
   return (
     <div className="dialog-overlay-player-selection-dialog">
       <div className="dialog-content-player-selection-dialog">
-      <div className="select-players-container-player-selection-dialog">
-        <h3>Select Players</h3>
-        <div className="button-group-player-selection-dialog">
-          <button onClick={handleDone}>Done</button>
-          <button onClick={onClose}>Cancel</button>
+        <div className="select-players-container-player-selection-dialog">
+          <h3>Select Players</h3>
+          <div className="button-group-player-selection-dialog">
+            <button onClick={handleDone}>Done</button>
+            <button onClick={onClose}>Cancel</button>
+          </div>
         </div>
-      </div>
         <div className="selected-players-player-selection-dialog">
           {selectedPlayers.map(player => (
             <span 
@@ -84,19 +83,20 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
           <div className="error-message-player-selection-dialog">Total credits exceed the limit of {TEAM_CREDIT}. Please adjust your selection.</div>
         )}
         <div className="player-dropdowns-player-selection-dialog">
-          {/* Team selection section on the left */}
-          {/* <div className="team-dropdowns-container">
+          <div className="team-dropdowns-container">
             {teams.map(team => (
               <div key={team} className="team-dropdown-player-selection-dialog">
                 <label>{team}</label>
                 <Select
+                  className="custom-dropdown"
+                  classNamePrefix="react-select"
                   value=''
-                  placeholder="Search & select a player"
+                  placeholder="Select a player"
                   options={players
                     .filter(player => player.team_short_name === team)
                     .map(player => ({
                       value: player.id,
-                      label: `${player.name} - ${player.role} - ${player.credits}`,
+                      label: `${player.name} - ${player.role.toLowerCase()} - ${player.credits}`,
                       isDisabled: selectedPlayers.includes(player) || totalCredits + player.credits > TEAM_CREDIT,
                     }))
                   }
@@ -111,32 +111,16 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
                 />
               </div>
             ))}
-          </div> */}
+          </div>
 
           {/* Role selection section on the right */}
           <div className="role-dropdowns-container">
             {roles.map(role => (
               <div key={role} className="role-dropdown-player-selection-dialog">
                 <label>{role}</label>
-                {/* <select 
-                  value=""
-                  onChange={(e) => handleSelectPlayer(players.find(p => p.id === e.target.value))}
-                  disabled={playerSelectionDisabled}
-                >
-                  <option value="">Select a player</option>
-                  {players
-                    .filter(player => player.role.toUpperCase() === role)
-                    .map(player => (
-                      <option 
-                        key={player.id} 
-                        value={player.id} 
-                        disabled={selectedPlayers.includes(player)}
-                      >
-                        {player.name} - {player.team_short_name} - {player.credits}
-                      </option>
-                    ))}
-                </select> */}
                 <Select
+                  className="custom-dropdown"
+                  classNamePrefix="react-select"
                   placeholder="Select a player"
                   value=''
                   options={players
@@ -160,7 +144,6 @@ const PlayerSelectionDialog = ({ players, onClose, onAddPlayers, alreadySelected
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );

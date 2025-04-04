@@ -165,3 +165,62 @@ select:focus {
     border-color: #007bff;
     outline: none;
 }
+
+/* Dropdown container */
+.custom-dropdown-container {
+    width: 100%;
+    min-width: 200px;
+  }
+  
+  /* Dropdown control (input box) */
+  .custom-dropdown .react-select__control {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: none;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .custom-dropdown .react-select__control:hover {
+    border-color: #007bff;
+  }
+  
+  .custom-dropdown .react-select__control--is-focused {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Placeholder text */
+  .custom-dropdown .react-select__placeholder {
+    color: #6c757d;
+    font-style: italic;
+  }
+  
+  /* Dropdown menu */
+  .custom-dropdown .react-select__menu {
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Options inside the dropdown */
+  .custom-dropdown .react-select__option {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .custom-dropdown .react-select__option--is-selected {
+    background-color: #007bff !important;
+    color: white !important;
+  }
+  
+  .custom-dropdown .react-select__option--is-focused {
+    background-color: #f8f9fa;
+  }
+  
+  /* Disabled state */
+  .custom-dropdown .react-select__control--is-disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  
