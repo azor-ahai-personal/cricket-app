@@ -27,6 +27,7 @@ const TeamDetails = () => {
   const [viceCaptainId, setViceCaptainId] = useState(null);
   const [openDropdownId, setOpenDropdownId] = useState(null); // Track which dropdown is open
   const [isPublished, setIsPublished] = useState(false);
+  const [showRules, setShowRules] = useState(false); // State for rules tooltip
   // const [showConfirmDialog, setShowConfirmDialog] = useState(false); // State for confirmation dialog
 
   const fetchTeamDetails = async () => {
@@ -61,6 +62,20 @@ const TeamDetails = () => {
       setIsPublished(team.published);
     }
   }, [players, team]); // Run when players or team changes
+
+  // Close rules tooltip when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showRules && !event.target.closest('.rules-tooltip-container-team-details')) {
+        setShowRules(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showRules]);
 
   const usedCredits = playerDetails.reduce((sum, player) => sum + player.credits, 0);
   const remainingCredits = TEAM_CREDIT - usedCredits;
@@ -122,9 +137,15 @@ const TeamDetails = () => {
 
       // Show success toast
       toast.success("Information saved successfully!");
+      
+      // Return a resolved promise
+      return Promise.resolve();
     } catch (error) {
       // Handle error (optional)
       toast.error("Failed to save information. Please try again.");
+      
+      // Return a rejected promise
+      return Promise.reject(error);
     }
   };
 
@@ -132,8 +153,11 @@ const TeamDetails = () => {
     setOpenDropdownId(openDropdownId === playerId ? null : playerId);
   };
 
+  const toggleRules = () => {
+    setShowRules(!showRules);
+  };
+
   const publishData = async () => {
-    console.log('Coming here');
     try{
       await apiService.publishTeam(teamId);
       setIsModified(false);
@@ -146,10 +170,17 @@ const TeamDetails = () => {
     }
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     const confirmPublish = window.confirm("Once published, you can't make changes to your team. Do you still want to publish?");
     if (confirmPublish){
-      publishData();
+      try {
+        // Save first
+        await handleSave();
+        // Then publish
+        await publishData();
+      } catch (error) {
+        toast.error("Error during publish process: " + error.message);
+      }
     }
     return;
   };
@@ -161,6 +192,29 @@ const TeamDetails = () => {
     const isCaptainSelected = captainId !== null;
     const isViceCaptainSelected = viceCaptainId !== null;
     return selectedPlayersCount === MAX_PLAYERS && isCreditsValid && isCaptainSelected && isViceCaptainSelected;
+  };
+
+  // Function to get missing requirements for tooltip
+  const getMissingRequirements = () => {
+    const requirements = [];
+    
+    if (playerDetails.length !== MAX_PLAYERS) {
+      requirements.push(`Select ${MAX_PLAYERS} players (currently have ${playerDetails.length})`);
+    }
+    
+    if (usedCredits > TEAM_CREDIT) {
+      requirements.push(`Reduce team credits (currently ${usedCredits}, maximum allowed is ${TEAM_CREDIT})`);
+    }
+    
+    if (captainId === null) {
+      requirements.push('Select a captain');
+    }
+    
+    if (viceCaptainId === null) {
+      requirements.push('Select a vice-captain');
+    }
+    
+    return requirements;
   };
 
   if (loading) {
@@ -225,16 +279,44 @@ const TeamDetails = () => {
           >
           Save
         </button>
-        <button 
-          onClick={handlePublish} 
-          disabled={!isPublishEnabled() || isPublished} // Disable if conditions are not met
-          className="publish-button-team-details"
-        >
+        <div className="publish-button-container">
+          <button 
+            onClick={handlePublish} 
+            disabled={!isPublishEnabled() || isPublished} // Disable if conditions are not met
+            className="publish-button-team-details"
+          >
             Publish
           </button>
+          {(!isPublishEnabled() && !isPublished) && (
+            <div className="publish-tooltip">
+              <div className="publish-tooltip-title">Complete these steps to publish:</div>
+              <ul>
+                {getMissingRequirements().map((req, index) => (
+                  <li key={index}>{req}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
         </div>
       </div>
-      <h3>Team Information</h3>
+      <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+        <h3>Team Information</h3>
+        <div className="rules-tooltip-container-team-details">
+          <div className="rules-icon-team-details" onClick={toggleRules}>ⓘ</div>
+          {showRules && (
+            <div className="rules-tooltip-team-details">
+              <div className="rules-tooltip-title-team-details">Team Selection Rules</div>
+              <ul className="rules-tooltip-list-team-details">
+                <li>You need to select 11 players</li>
+                <li>You have 975 credits to spend to create a team</li>
+                <li>You can select up to 4 overseas players</li>
+                <li>Make a captain and vice-captain. Your captain will receive 2x and vice-captain 1.5x points for every match</li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="team-info-team-details">
         <div className="info-item-team-details">
           <strong>Total Credits:</strong> {TEAM_CREDIT}

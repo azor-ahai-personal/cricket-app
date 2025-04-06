@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   background-color: #f4f4f4;
+  position: relative;
 }
 
 /* Ensure buttons are aligned in a row */
@@ -15,6 +16,9 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  position: relative;
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+  max-width: 100%;
 }
 
 /* Style buttons */
@@ -31,8 +35,103 @@
   margin-left: 10px;
   margin-right: 10px;
   z-index: 2;
+  position: relative;
 }
 
 .action-button-home:hover {
   background-color: #0056b3;
+}
+
+/* Cloud tooltip styles */
+.tooltip {
+  position: absolute;
+  background-color: white;
+  padding: 15px;
+  border-radius: 30px;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+  width: 250px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Cloud shape with CSS */
+.tooltip:before {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+/* Positioning for tooltips */
+.tooltip-teams {
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-teams:before {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.tooltip-players {
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-players:before {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.tooltip-contests {
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-contests:before {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .buttons-container-home {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 10px;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .action-button-home {
+    width: 200px;
+    margin: 0;
+  }
+  
+  /* Hide tooltips on mobile */
+  .tooltip {
+    display: none;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .action-button-home {
+    width: 180px;
+    font-size: 14px;
+  }
 }

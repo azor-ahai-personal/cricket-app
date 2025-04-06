@@ -20,7 +20,6 @@ const Contests = () => {
 
   // Get the currentUser from the Redux store
   const currentUser = useSelector((state) => state.auth.currentUser);
-  console.log(currentUser);
 
   const fetchContests = async () => {
     try {
@@ -101,35 +100,43 @@ const Contests = () => {
     return <div>{error}</div>;
   }
 
-  console.log({contests});
+  const navigateToHome = () => {
+    navigate('/');
+  }
+
+  // console.log({contests});
   return (
     <div className="contests-container-contests">
-      {/* Popup */}
       {showPopup && (
         <div className="popup-contests">
           Passkey copied to clipboard!
         </div>
       )}
-
       <div className="header-contests">
-        <button
-          className="home-button2-contests"
-          onClick={() => navigate('/')} // Navigate to the home page
-        >
-          Home
-        </button>
+        <div className="save-publish-buttons-contests">
+          <button
+            className="home-button-contests"
+            onClick={() => navigateToHome()} // Navigate to the home page
+          >
+            Home
+          </button>
+        </div>
         <h2>Contests</h2>
-        <div className="buttons-container-contests">
-          <button className="action-button-contests" onClick={() => setIsDialogOpen(true)}>
+        <div className="save-publish-buttons-contests">
+          <button 
+            className="save-button-contests"
+            onClick={() => setIsDialogOpen(true)}
+          >
             Create Contest
           </button>
-          <button className="action-button-contests join-contest-button-contests" onClick={() => setIsJoinDialogOpen(true)}>
+          <button 
+            onClick={() => setIsJoinDialogOpen(true)}
+            className="save-button-contests"
+          >
             Join Contest
           </button>
         </div>
       </div>
-
-      {/* Dialog Box */}
       {isDialogOpen && (
         <div className="dialog-overlay-contests">
           <div className="dialog-box-contests">
@@ -236,7 +243,7 @@ const Contests = () => {
                       >
                         Copy Passkey
                       </button>
-                      {!contest.active && currentUser?.id === contest.owner.id && (
+                      {!contest.active && currentUser?.id === contest?.owner?.id && (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
