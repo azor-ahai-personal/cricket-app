@@ -42,6 +42,7 @@ module Api
                     render json: { errors: @contest.errors.full_messages }, status: :unprocessable_entity
                 end
             end
+
             def join
                 contest = Contest.find_by(passkey: params[:passkey])
                 if contest.nil?
@@ -99,6 +100,22 @@ module Api
                 end
             end
 
+            def activate
+                @contest = Contest.find(params[:id])
+                if @contest.nil?
+                    render json: { error: "Contest not found" }, status: :not_found
+                    return
+                end
+                if @contest.active
+                    render json: { error: "Contest is already active" }, status: :unprocessable_entity
+                    return
+                end
+                @contest.active = true
+                @contest.start_time = Time.now
+                @contest.save!
+                render json: { message: "Contest activated successfully" }, status: :ok
+            end
+                
             private
 
             def generate_unique_passkey

@@ -79,10 +79,7 @@ const ContestDetails = () => {
           top_teams: selectedTopTeams,
         });
         setPublished(true);
-        // Handle successful participation (e.g., show a success message)
         alert("Successfully participated with the team!");
-        // Reload the page
-        // window.location.reload();
       } catch (err) {
         setPublished(false);
         setError('Failed to participate in the contest');

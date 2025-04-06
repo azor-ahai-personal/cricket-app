@@ -49,14 +49,14 @@ const Home = () => {
           </div>
         </div>
         
-        {/* <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative' }}>
           <div className="tooltip tooltip-contests">
             Battle Arena! Create or join epic showdowns, climb the leaderboard, and brag about your cricket genius! 🏆🎯
           </div>
           <button className="action-button-home" onClick={handleViewContests}>
             Contests
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );

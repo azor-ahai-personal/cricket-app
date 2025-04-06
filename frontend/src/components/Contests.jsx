@@ -17,6 +17,7 @@ const Contests = () => {
   const [passkey, setPasskey] = useState(''); // State for passkey input
   const [openDropdownId, setOpenDropdownId] = useState(null); // Track which dropdown is open
   const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+  const [showRules, setShowRules] = useState(true); // State for rules visibility
 
   // Get the currentUser from the Redux store
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -80,7 +81,7 @@ const Contests = () => {
   const handleUpdateStatus = async (contestId) => {
     if (window.confirm('Do you really want to activate the contest?')) {
       try {
-        const response = await apiService.updateContest(contestId, { active: true });
+        const response = await apiService.activateContest(contestId);
         await fetchContests(); // Refresh the contests list
       } catch (err) {
         setError('Failed to update contest status');
@@ -90,6 +91,10 @@ const Contests = () => {
 
   const toggleDropdown = (contestId) => {
     setOpenDropdownId(openDropdownId === contestId ? null : contestId);
+  };
+
+  const toggleRules = () => {
+    setShowRules(!showRules);
   };
 
   if (loading) {
@@ -137,6 +142,31 @@ const Contests = () => {
           </button>
         </div>
       </div>
+
+      {/* Contest Rules Section */}
+      <div className="rules-container-contests">
+        <div className="rules-header-contests" onClick={toggleRules}>
+          <div className="rules-title-contests">
+            <span role="img" aria-label="info">ℹ️</span> Contest Rules
+          </div>
+          <div className={`rules-icon-contests ${showRules ? 'rules-icon-rotated-contests' : ''}`}>
+            ▼
+          </div>
+        </div>
+        {showRules && (
+          <div className="rules-content-contests">
+            <ol className="rules-list-contests">
+              <li><strong>Create contests</strong> with a custom name and entry fee to compete with friends</li>
+              <li><strong>Join multiple contests</strong> to increase your chances of winning and fun</li>
+              <li><strong>Payment handling:</strong> Currently self-managed between participants (in-app payments coming soon!)</li>
+              <li><strong>Invite friends</strong> by sharing the contest passkey — just click the three dots (⋮) and select "Copy Passkey"</li>
+              <li><strong>Activate your contest</strong> once all participants have joined to start tracking points after each match</li>
+              <li><strong>Track your progress</strong> by clicking on any contest to view live scores and standings</li>
+            </ol>
+          </div>
+        )}
+      </div>
+
       {isDialogOpen && (
         <div className="dialog-overlay-contests">
           <div className="dialog-box-contests">

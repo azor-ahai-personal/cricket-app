@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :contests, only: [:index, :create, :update, :destroy, :show] do
         put 'join', on: :collection
         put 'participate', on: :member
+        put 'activate', on: :member
       end
       resources :fantasy_teams, only: [:index, :create, :update, :destroy, :show] do
         put 'publish', on: :member
